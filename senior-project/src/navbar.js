@@ -6,6 +6,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import { AppBar, IconButton, Toolbar, Box, Grid, Button, Avatar } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { green } from "@mui/material/colors";
+import logo from "./images/logo.png";
 
 
 function Navbar () {
@@ -14,8 +15,9 @@ function Navbar () {
     <Box sx={{flexGrow: 1}} >
         <AppBar position="static">
         <Grid container direction={"row"} justifyContent={"flex-end"} alignItems={"center"} >
-            <Toolbar sx={{position: "absolute", left: 5}}>
-                <IconButton color="secondary" size="large" edge="start" sx={{mr: 2}}>
+            <Toolbar sx={{position: "absolute", left: 1}}>
+                <img src={logo} style={{height: 40}}/>
+                <IconButton color="secondary" size="large" edge="start" sx={{ml: 1}}>
                     <MenuIcon/>
                 </IconButton>
             </Toolbar>
