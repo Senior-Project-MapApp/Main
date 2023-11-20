@@ -3,25 +3,29 @@ import Map from "./map";
 import Calendar from "./calendar";
 import Profile from "./profile";
 import { Routes, Route, Link } from 'react-router-dom';
-import { AppBar, IconButton, Toolbar, Box, Grid } from "@mui/material";
+import { AppBar, IconButton, Toolbar, Box, Grid, Button, Avatar } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
+import { green } from "@mui/material/colors";
+
 
 function Navbar () {
     return (
-    <>      
-    <Box sx={{flexGrow: 1}}>
+    <>
+    <Box sx={{flexGrow: 1}} >
         <AppBar position="static">
-        <Grid container direction={"row"} justifyContent={"flex-start"} alignItems={"center"} >
-            <Toolbar>
-                <IconButton size="large" edge="start" color="green" sx={{mr: 2}}>
+        <Grid container direction={"row"} justifyContent={"flex-end"} alignItems={"center"} >
+            <Toolbar sx={{position: "absolute", left: 5}}>
+                <IconButton color="secondary" size="large" edge="start" sx={{mr: 2}}>
                     <MenuIcon/>
                 </IconButton>
             </Toolbar>
-            <Link hrefLang="/home" underline="hover" >Home</Link>
-            <Link to="/mapview">Map</Link>
-            <Link to="/calendarview">Cal</Link>
-            <Link to="/profile">Profile</Link>
+            <Button to="/home" LinkComponent={Link} color="secondary" >Home</Button>
+            <Button to="/mapview" LinkComponent={Link} color="secondary" >Map</Button>
+            <Button to="/calendarview" LinkComponent={Link} color="secondary" >Calendar</Button>
+            <Button to="/profile" LinkComponent={Link} color="secondary" >Profile</Button>
+            <Avatar sx={{bgcolor: green[900], margin: 1}}></Avatar>
             </Grid>
+        
         </AppBar>
     </Box>
     <Routes>
@@ -30,7 +34,6 @@ function Navbar () {
         <Route path="calendarview" element={<Calendar/>}/>
         <Route path="profile" element={<Profile/>}/>
     </Routes>
-
     </>
     );
 }

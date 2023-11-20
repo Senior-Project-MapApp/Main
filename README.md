@@ -14,3 +14,5 @@ to start the ract app.
 You will also need to install:
 
     npm install react-router-dom
+
+    npm install @mui/material @emotion/react @emotion/styled
