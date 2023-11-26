@@ -16,7 +16,7 @@ function Navbar () {
         <AppBar position="static">
         <Grid container direction={"row"} justifyContent={"flex-end"} alignItems={"center"} >
             <Toolbar sx={{position: "absolute", left: 1}}>
-                <img src={logo} style={{height: 40}}/>
+                <img src={logo} style={{height: 40}} alt="App logo"/>
                 <IconButton color="secondary" size="large" edge="start" sx={{ml: 1}}>
                     <MenuIcon/>
                 </IconButton>
