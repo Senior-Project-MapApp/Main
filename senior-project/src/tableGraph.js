@@ -1,5 +1,7 @@
 import React from "react";
 import { TableBody, TableCell, TableContainer, TableHead, TableRow, Table, Paper, } from "@mui/material";
+import DensityMediumIcon from '@mui/icons-material/DensityMedium';
+import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 
 function TableGraph ({data}) {
 
@@ -20,10 +22,10 @@ function TableGraph ({data}) {
                         <TableBody>
                         {data.map((dataObj) => {
                             return (
-                                <TableRow >
+                                <TableRow sx={dataObj.status ? {background: "lightgreen"}:{}}>
                                     <TableCell align="center">{dataObj.task}</TableCell>
                                     <TableCell align="center">{dataObj.desc}</TableCell> 
-                                    <TableCell align="center">{dataObj.priority}</TableCell> 
+                                    <TableCell align="center">{dataObj.priority  < 2 ? <DensityMediumIcon/> : <HorizontalRuleIcon/>}</TableCell> 
                                     <TableCell align="center">{dataObj.status}</TableCell>
                                 </TableRow>
                             );
