@@ -1,0 +1,23 @@
+[
+    {
+        "task": 1,
+        "priority": "low",
+        "status": "done",
+        "desc": "wash dishes",
+        "location": "job"
+    },
+    {
+        "task": 2,
+        "priority": "high",
+        "status": "pending",
+        "desc": "do laundry",
+        "location": "home"
+    },
+    {
+        "task": 3,
+        "priority": "medium",
+        "status": "not started",
+        "desc": "vacume house",
+        "location": "home"
+    } 
+]
