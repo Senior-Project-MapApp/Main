@@ -1,22 +1,22 @@
 [
     {
         "task": 1,
-        "priority": "low",
-        "status": "done",
+        "priority": 1,
+        "status": 1,
         "desc": "wash dishes",
         "location": "job"
     },
     {
         "task": 2,
-        "priority": "high",
-        "status": "pending",
+        "priority": 3,
+        "status": 0,
         "desc": "do laundry",
         "location": "home"
     },
     {
         "task": 3,
-        "priority": "medium",
-        "status": "not started",
+        "priority": 2,
+        "status": 0,
         "desc": "vacume house",
         "location": "home"
     } 
