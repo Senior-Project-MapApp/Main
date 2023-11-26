@@ -1,31 +1,31 @@
 import React from "react";
-import { TableBody, TableCell, TableContainer, TableHead, TableRow, Table, Paper, } from "@mui/material";
+import { TableBody, TableCell, TableContainer, TableHead, TableRow, Table, Paper, Typography, } from "@mui/material";
 import DensityMediumIcon from '@mui/icons-material/DensityMedium';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 
 function TableGraph ({data}) {
 
-    data.sort((a, b) => a.priority - b.priority);
+    data.sort((a, b) => b.priority - a.priority);
     data.sort((a, b) => a.status - b.status);
 
     return(
-        <TableContainer component={Paper}>
+        <TableContainer sx={{marginTop: "2%"}} component={Paper}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
-                            <TableRow>
-                                <TableCell align="center">Task</TableCell>
-                                <TableCell align="center">Description</TableCell>
-                                <TableCell align="center">Priority</TableCell>
-                                <TableCell align="center">Status</TableCell>
+                            <TableRow sx={{"& th": {color: "#1b5e20", backgroundColor: "#c5e1a5"}}}>
+                                <TableCell align="center"><Typography>Task</Typography></TableCell>
+                                <TableCell align="center"><Typography>Description</Typography></TableCell>
+                                <TableCell align="center"><Typography>Priority</Typography></TableCell>
+                                <TableCell align="center"><Typography>Status</Typography></TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                         {data.map((dataObj) => {
                             return (
-                                <TableRow sx={dataObj.status ? {background: "lightgreen"}:{}}>
+                                <TableRow sx={dataObj.status ? {background: "#dcedc8"}:{}}>
                                     <TableCell align="center">{dataObj.task}</TableCell>
                                     <TableCell align="center">{dataObj.desc}</TableCell> 
-                                    <TableCell align="center">{dataObj.priority  < 2 ? <DensityMediumIcon/> : <HorizontalRuleIcon/>}</TableCell> 
+                                    <TableCell sx={dataObj.priority && !dataObj.status ? {background: "#ef9a9a"}:{}} align="center">{dataObj.priority  <  1 ? <HorizontalRuleIcon/> : <DensityMediumIcon/>  }</TableCell> 
                                     <TableCell align="center">{dataObj.status}</TableCell>
                                 </TableRow>
                             );

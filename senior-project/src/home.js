@@ -4,8 +4,7 @@ import TableGraph from "./tableGraph";
 function Home () {
     return(
         <>
-        Home sweet home
-        <TableGraph data={data}/>
+            <TableGraph data={data}/>
         </>
     );
 }
