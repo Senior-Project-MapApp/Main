@@ -21,42 +21,42 @@
         "location": "home"
     },
     {
-        "task": 1,
+        "task": 4,
         "priority": 0,
         "status": 0,
         "desc": "wash dishes",
         "location": "job"
     },
     {
-        "task": 2,
+        "task": 5,
         "priority": 1,
         "status": 0,
         "desc": "do laundry",
         "location": "home"
     },
     {
-        "task": 3,
+        "task": 6,
         "priority": 0,
         "status": 0,
         "desc": "vacume house",
         "location": "home"
     } ,
     {
-        "task": 1,
+        "task": 7,
         "priority": 0,
         "status": 0,
         "desc": "wash dishes",
         "location": "job"
     },
     {
-        "task": 2,
+        "task": 8,
         "priority": 1,
         "status": 0,
         "desc": "do laundry",
         "location": "home"
     },
     {
-        "task": 3,
+        "task": 9,
         "priority": 0,
         "status": 0,
         "desc": "vacume house",

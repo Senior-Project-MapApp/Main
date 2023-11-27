@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Box } from "@mui/material";
-import TableGraph from "./tableGraph";
+import MapGraph from "./mapGraph";
 import data from "./example.json";
 
 function Map () {
@@ -11,7 +11,7 @@ function Map () {
                 
             </Box>
             <Box sx={{width: "40%"}}>
-                <TableGraph data={data}/>
+                <MapGraph data={data}/>
             </Box>
         </Grid>
         </>
