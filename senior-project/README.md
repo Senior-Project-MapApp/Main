@@ -1,5 +1,10 @@
 # Getting Started with Create React App
 
+
+    npm install react
+    npm install react-dom
+    npm install @react-google-maps/api
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
