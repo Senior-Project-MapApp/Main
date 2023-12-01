@@ -1,5 +1,7 @@
 {
     "userID": 12345,
+    "userName": "Anna Mikhailenko",
+    "joined": "Septemper 13, 2020",
     "locs": ["job", "home"],
     "numloc": 2,
     "data": [
@@ -47,7 +49,7 @@
     } ,
     {
         "task": 7,
-        "priority": 0,
+        "priority": 1,
         "status": 0,
         "desc": "wash dishes",
         "location": "job"
