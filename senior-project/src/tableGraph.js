@@ -5,8 +5,10 @@ import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 
 function TableGraph ({data}) {
 
-    data.sort((a, b) => b.priority - a.priority);
-    data.sort((a, b) => a.status - b.status);
+    var arr = data.data;
+
+    arr.sort((a, b) => b.priority - a.priority);
+    arr.sort((a, b) => a.status - b.status);
 
     return(
         <TableContainer sx={{marginTop: "2%", maxHeight: "50"}} component={Paper}>
@@ -20,7 +22,7 @@ function TableGraph ({data}) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                        {data.map((dataObj) => {
+                        {arr.map((dataObj) => {
                             return (
                                 <TableRow sx={dataObj.status ? {background: "#dcedc8"}:{}}>
                                     <TableCell align="center">{dataObj.task}</TableCell>

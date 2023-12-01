@@ -1,4 +1,8 @@
-[
+{
+    "userID": 12345,
+    "locs": ["job", "home"],
+    "numloc": 2,
+    "data": [
     {
         "task": 1,
         "priority": 0,
@@ -62,4 +66,4 @@
         "desc": "vacume house",
         "location": "home"
     } 
-]
+]}
