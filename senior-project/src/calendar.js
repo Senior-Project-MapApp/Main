@@ -1,9 +1,8 @@
 import React from "react";
 import { Grid, Box } from "@mui/material";
 import TableGraph from "./tableGraph";
-import data from "./example.json"
 
-function Calendar () {
+function Calendar ({data}) {
     return (
         <>
         <Grid container direction={"row"}>

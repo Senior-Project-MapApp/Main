@@ -1,10 +1,10 @@
 import userData from "./example.json";
 import TableGraph from "./tableGraph";
 
-function Home () {
+function Home ({data}) {
     return(
         <>
-            <TableGraph data={userData}/>
+            <TableGraph data={data}/>
         </>
     );
 }

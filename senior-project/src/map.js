@@ -1,9 +1,8 @@
 import React from "react";
 import { Grid, Box } from "@mui/material";
 import MapGraph from "./mapGraph";
-import data from "./example.json";
 
-function Map () {
+function Map ({data}) {
     return (
         <>
         <Grid container direction={"row"}>
