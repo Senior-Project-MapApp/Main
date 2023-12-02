@@ -4,6 +4,8 @@
     "joined": "Septemper 13, 2020",
     "locs": ["job", "home"],
     "numloc": 2,
+    "numTasks": 9,
+    "doneTasks": 2,
     "image": "./images/logo.png",
     "data": [
     {

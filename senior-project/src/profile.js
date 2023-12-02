@@ -6,11 +6,12 @@ function Profile ({data}) {
     return (
         <>
             <Grid container direction={"row"}>
-                <Box sx={{width: "50%", margin : "2%"}}>
-                    <Avatar sx={{bgcolor: green[900], margin: 1, width: "50%", height: "120%"}}></Avatar>
-                    <Typography>{}</Typography>
+            <Box sx={{ margin: "2%",marginTop: "5%"}}>
+                <Avatar variant="rounded" sx={{bgcolor: green[900], width: 100, height: 100}}></Avatar>
+                <Typography variant="h4">{data.userName}</Typography>
+            </Box>
+                <Box>
                 </Box>
-
             </Grid>
         </>
     );
