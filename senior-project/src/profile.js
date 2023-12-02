@@ -6,7 +6,7 @@ function Profile ({data}) {
     return (
         <>
             <Grid container direction={"row"}>
-            <Box sx={{ margin: "2%",marginTop: "5%"}}>
+            <Box sx={{ margin: "2%", marginTop: "5%"}}>
                 <Avatar variant="rounded" sx={{bgcolor: green[900], width: 100, height: 100}}></Avatar>
                 <Typography variant="h4">{data.userName}</Typography>
             </Box>
