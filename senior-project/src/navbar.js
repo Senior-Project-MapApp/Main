@@ -3,10 +3,11 @@ import Map from "./map";
 import Calendar from "./calendar";
 import Profile from "./profile";
 import { Routes, Route, Link } from 'react-router-dom';
-import { AppBar, IconButton, Toolbar, Box, Grid, Button, Avatar, Tooltip } from "@mui/material";
+import { AppBar, IconButton, Toolbar, Box, Grid, Button, Avatar } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { green } from "@mui/material/colors";
 import logo from "./images/logo.png";
+
 
 function Navbar ({data}) {
     return (
@@ -24,9 +25,7 @@ function Navbar ({data}) {
             <Button to="/mapview" LinkComponent={Link} color="secondary" >Map</Button>
             <Button to="/calendarview" LinkComponent={Link} color="secondary" >Calendar</Button>
             <Button to="/profile" LinkComponent={Link} color="secondary" >Profile</Button>
-            <Tooltip title={data.userName}>
-                <Avatar sx={{bgcolor: green[900], margin: 1}}></Avatar>
-            </Tooltip>
+            <Avatar sx={{bgcolor: green[900], margin: 1}}></Avatar>
             </Grid>
         
         </AppBar>
