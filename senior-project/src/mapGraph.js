@@ -32,7 +32,7 @@ function MapGraph ({data}) {
                         return(
                             <TableBody key={dataObj.task} >
                                 <TableRow sx={dataObj.status ? {background: "#dcedc8"}:{}}>  
-                                    { dataObj.location === obj.location ? <TableCell align="center">{dataObj.status ? <CheckIcon/> : <> </> }</TableCell> : <></>}
+                                    { dataObj.location === obj.location ? <TableCell align="center">{dataObj.status ? <CheckIcon/> : <></> }</TableCell> : <></>}
                                     { dataObj.location === obj.location ?  <TableCell align="center">{dataObj.task}</TableCell> : <></> }
                                     { dataObj.location === obj.location ?  <TableCell align="center">{dataObj.name}</TableCell> : <></> }
                                     { dataObj.location === obj.location ?  <TableCell sx={dataObj.priority && !dataObj.status ? {background: "#ef9a9a"}:{}} align="center">{dataObj.priority  <  1 ? <HorizontalRuleIcon/> : <DensityMediumIcon/>  }</TableCell> : <></> }
