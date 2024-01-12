@@ -16,7 +16,7 @@ function Profile ({data}) {
                         <Typography>{data.joined}</Typography>
                     </Grid>
                 </Box>
-                <Grid direction={"column"} alignItems={"center"} justifyContent={"center"} sx={{margin: "5%"}}>
+                <Grid container direction={"column"} alignItems={"center"} justifyContent={"center"} sx={{margin: "5%"}}>
                     <Grid container direction={"row"}>
                         <LocationOnIcon/>
                         <Typography>Number of Locations: {data.numloc}</Typography>
