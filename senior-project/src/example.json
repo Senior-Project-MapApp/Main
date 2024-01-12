@@ -2,7 +2,7 @@
     "userID": 12345,
     "userName": "Anna Mikhailenko",
     "joined": "Septemper 13, 2020",
-    "locs": ["job", "home"],
+    "locs": [{"location":"job", "index": 0},{"location": "home", "index": 1}],
     "numloc": 2,
     "numTasks": 9,
     "doneTasks": 2,

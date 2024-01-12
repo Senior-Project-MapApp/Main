@@ -11,7 +11,7 @@ function TableGraph ({data}) {
     arr.sort((a, b) => a.status - b.status);
 
     return(
-        <TableContainer sx={{marginTop: "2%", maxHeight: "50"}} component={Paper}>
+        <TableContainer  sx={{marginTop: "2%", maxHeight: "50"}} component={Paper}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
                             <TableRow sx={{"& th": {color: "#1b5e20", backgroundColor: "#c5e1a5"}}}>
@@ -24,7 +24,7 @@ function TableGraph ({data}) {
                         <TableBody>
                         {arr.map((dataObj) => {
                             return (
-                                <TableRow sx={dataObj.status ? {background: "#dcedc8"}:{}}>
+                                <TableRow key={dataObj.task} sx={dataObj.status ? {background: "#dcedc8"}:{}}>
                                     <TableCell align="center">{dataObj.task}</TableCell>
                                     <TableCell align="center">{dataObj.desc}</TableCell> 
                                     <TableCell sx={dataObj.priority && !dataObj.status ? {background: "#ef9a9a"}:{}} align="center">{dataObj.priority  <  1 ? <HorizontalRuleIcon/> : <DensityMediumIcon/>  }</TableCell> 
