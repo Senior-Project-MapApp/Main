@@ -13,6 +13,7 @@
         "priority": 0,
         "status": 1,
         "name": "wash dishes",
+        "desc": "put dishes in dishwaser",
         "location": "job"
     },
     {
@@ -20,6 +21,7 @@
         "priority": 1,
         "status": 1,
         "name": "do laundry",
+        "desc": "put clothes in washing machine",
         "location": "home"
     },
     {
@@ -27,6 +29,7 @@
         "priority": 0,
         "status": 0,
         "name": "vacume house",
+        "desc": "make sure the all the rooms are vacumed",
         "location": "home"
     },
     {
@@ -34,6 +37,7 @@
         "priority": 0,
         "status": 0,
         "name": "wash dishes",
+        "desc": "put dishes in dishwaser",
         "location": "job"
     },
     {
@@ -41,6 +45,7 @@
         "priority": 1,
         "status": 0,
         "name": "do laundry",
+        "desc": "put clothes in dryer",
         "location": "home"
     },
     {
@@ -48,6 +53,7 @@
         "priority": 0,
         "status": 0,
         "name": "vacume house",
+        "desc": "turn on the rumba",
         "location": "home"
     } ,
     {
@@ -55,6 +61,7 @@
         "priority": 1,
         "status": 0,
         "name": "wash dishes",
+        "desc": "put dishes in dishwaser",
         "location": "job"
     },
     {
@@ -62,6 +69,7 @@
         "priority": 1,
         "status": 0,
         "name": "do laundry",
+        "desc": "hang clothes on clothes lime",
         "location": "home"
     },
     {
@@ -69,6 +77,7 @@
         "priority": 0,
         "status": 0,
         "name": "vacume house",
+        "desc": "put away the chairs and wires before turning on the rumba",
         "location": "home"
     } 
 ]}
