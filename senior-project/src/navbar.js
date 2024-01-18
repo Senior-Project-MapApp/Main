@@ -9,7 +9,7 @@ import { green } from "@mui/material/colors";
 import logo from "./images/logo.png";
 
 
-function Navbar () {
+function Navbar ({data}) {
     return (
     <>
     <Box sx={{flexGrow: 1}} >
@@ -31,10 +31,10 @@ function Navbar () {
         </AppBar>
     </Box>
     <Routes>
-        <Route path="/home" element={<Home/>}/>
-        <Route path="/mapview" element={<Map/>}/>
-        <Route path="calendarview" element={<Calendar/>}/>
-        <Route path="profile" element={<Profile/>}/>
+        <Route path="/home" element={<Home data={data}/>}/>
+        <Route path="/mapview" element={<Map data={data}/>}/>
+        <Route path="calendarview" element={<Calendar data={data}/>}/>
+        <Route path="profile" element={<Profile data={data}/>}/>
     </Routes>
     </>
     );
