@@ -2,15 +2,19 @@ import React, {useState} from "react";
 import { Grid, Box, Avatar, Divider, List, ListItem, ListItemText, ListItemButton } from "@mui/material";
 import { green } from "@mui/material/colors";
 import ProfileStat from "./profileStat";
+import ProfileAccount from "./profileAccount";
+import Settings from "./settings";
 
 function Profile ({data}) {
 
     const [showStat, setShowStat] = useState(0);
+    const [showSetting, setShowSetting] = useState(0);
     const [showAccount, setShowAccount] = useState(1);
 
     function handleStatClick(){
         if(showStat === 0){
             setShowAccount(0);
+            setShowSetting(0);
             setShowStat(1);
         }
     }
@@ -18,7 +22,16 @@ function Profile ({data}) {
     function handleAccountClick(){
         if(showAccount === 0){
             setShowStat(0);
+            setShowSetting(0);
             setShowAccount(1);
+        }
+    }
+
+    function handleSettingsClick(){
+        if(showSetting === 0){
+            setShowStat(0);
+            setShowAccount(0);
+            setShowSetting(1);
         }
     }
 
@@ -41,11 +54,18 @@ function Profile ({data}) {
                             </ListItemButton>
                         </ListItem>
                         <Divider variant="middle"/>
+                        <ListItem>
+                            <ListItemButton>
+                                <ListItemText primary="Settings" onClick={handleSettingsClick}/>
+                            </ListItemButton>
+                        </ListItem>
+                        <Divider variant="middle"/>
                     </List>
                 </Box>
                 <Divider orientation="vertical" flexItem />
                 {showStat === 1 ? <ProfileStat data={data}/> : <></>}
-                {showAccount === 1 ? <></> : <></>}
+                {showAccount === 1 ? <ProfileAccount/> : <></>}
+                {showSetting === 1 ? <Settings/> : <></>}
             </Grid>
         </>
     );
