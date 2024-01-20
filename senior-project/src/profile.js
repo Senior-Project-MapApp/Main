@@ -64,8 +64,8 @@ function Profile ({data}) {
                 </Box>
                 <Divider orientation="vertical" flexItem />
                 {showStat === 1 ? <ProfileStat data={data}/> : <></>}
-                {showAccount === 1 ? <ProfileAccount/> : <></>}
-                {showSetting === 1 ? <Settings/> : <></>}
+                {showAccount === 1 ? <ProfileAccount data={data}/> : <></>}
+                {showSetting === 1 ? <Settings data={data}/> : <></>}
             </Grid>
         </>
     );
