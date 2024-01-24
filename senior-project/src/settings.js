@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Box, Typography, Switch, List, ListItem, ListItemText} from "@mui/material";
+import { Box, Typography, Switch, List, ListItem, ListItemText} from "@mui/material";
 
 function Settings({data}){
     return(
