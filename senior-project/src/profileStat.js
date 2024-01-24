@@ -12,24 +12,27 @@ function ProfileStat ({data}) {
             <Typography variant="caption">Joined: {data.joined}</Typography>
             <Grid container direction={"column"} rowGap={2} sx={{marginTop: "5%"}}>
                 <Typography variant="h4">Overall Statistics</Typography>
-                <List>
+                <List sx={{width: "30%"}}>
                     <ListItem>
                         <ListItemIcon>
                             <LocationOnIcon/>
                         </ListItemIcon>
-                        <ListItemText primary={`Number of Locations: ${data.numloc}`}/>
+                        <ListItemText primary="Number of Locations:"/>
+                        <Typography>{data.numloc}</Typography>
                     </ListItem>
                     <ListItem>
                         <ListItemIcon>
                             <AssignmentIcon/>
                         </ListItemIcon>
-                        <ListItemText primary={`Total Tasks: ${data.numTasks}`}/>
+                        <ListItemText primary="Total Tasks: "/>
+                        <Typography>{data.numTasks}</Typography>
                     </ListItem>
                     <ListItem>
                         <ListItemIcon>
                             <CheckIcon/>
                         </ListItemIcon>
-                        <ListItemText primary={`Done Tasks: ${data.doneTasks}`}/>
+                        <ListItemText primary="Done Tasks: "/>
+                        <Typography>{data.doneTasks}</Typography>
                     </ListItem>
                 </List>
             </Grid> 
