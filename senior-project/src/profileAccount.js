@@ -20,7 +20,7 @@ function ProfileAccount({data}){
                 <TextField label="Email" defaultValue={"data.email"} sx={{width: "25ch"}}/>
             </Grid>
             <Grid container direction={"row"} columnGap={2} sx={{marginTop: "2%"}}> 
-                <TextField label="Password" type={showPass ? "text" : "password"} defaultValue={"data.password?"} sx={{width: "25ch"}} InputProps={{endAdornment: (
+                <TextField label="Password" type={showPass ? "text" : "password"} defaultValue={"data.password?"} sx={{width: "25ch"}} InputProps={{endadornment: (
                 <InputAdornment position="end">
                     <IconButton onClick={handleClickShowPass} edge="end" color="primary">
                         {showPass ? <VisibilityOffIcon/> : <VisibilityIcon/>}
