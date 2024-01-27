@@ -8,7 +8,7 @@ function Map ({data}) {
         <>
         <Grid container direction={"row"}>
             <Box sx={{width: "60%"}}>
-                <Button sx={{marginTop: "65%", marginLeft: "84%"}} variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
+                <Button sx={{marginTop: "3%", marginLeft: "84%"}} variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
             </Box>
             <Box sx={{width: "40%"}}>
                 <MapGraph data={data}/>
