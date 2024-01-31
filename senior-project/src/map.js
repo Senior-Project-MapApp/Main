@@ -3,44 +3,60 @@ import React, { useEffect, useState } from 'react';
 function MapWithSearch() {
   const [map, setMap] = useState(null);
   const [searchBox, setSearchBox] = useState(null);
-  const [places, setPlaces] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [searchInput, setSearchInput] = useState('');
+  const [directionsService, setDirectionsService] = useState(null);
+  const [directionsRenderer, setDirectionsRenderer] = useState(null);
+  const [userLocation, setUserLocation] = useState(null);
+  const [distance, setDistance] = useState(null);
+  const [duration, setDuration] = useState(null);
+  const [googleMapsUrl, setGoogleMapsUrl] = useState('');
 
   useEffect(() => {
     const initializeMap = () => {
       const mapOptions = {
-        center: { lat: 47.4914, lng: -117.5853 }, // Default center coordinates (e.g., Eastern Washington University)
+        center: { lat: 47.4914, lng: -117.5853 }, // Default center coordinates
         zoom: 10,
       };
       const mapElement = document.getElementById('map');
-
       const newMap = new window.google.maps.Map(mapElement, mapOptions);
+      const newDirectionsService = new window.google.maps.DirectionsService();
+      const newDirectionsRenderer = new window.google.maps.DirectionsRenderer();
+      newDirectionsRenderer.setMap(newMap);
 
       const input = document.getElementById('search-input');
       const newSearchBox = new window.google.maps.places.SearchBox(input);
 
       newSearchBox.addListener('places_changed', () => {
         const newPlaces = newSearchBox.getPlaces();
-        setPlaces(newPlaces);
-
         if (newPlaces.length > 0) {
           const place = newPlaces[0];
-          setSelectedPlace({
-            name: place.name,
-            location: {
-              lat: place.geometry.location.lat(),
-              lng: place.geometry.location.lng(),
-            },
-          });
+          setSelectedPlace(place);
         }
       });
 
       setMap(newMap);
       setSearchBox(newSearchBox);
+      setDirectionsService(newDirectionsService);
+      setDirectionsRenderer(newDirectionsRenderer);
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const userLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          setUserLocation(userLocation);
+          newMap.setCenter(userLocation);
+          new window.google.maps.Marker({
+            position: userLocation,
+            map: newMap,
+            title: "Your Location",
+          });
+        });
+      }
     };
 
-    // Load the Google Maps JavaScript API with your API key from the environment variable
     const script = document.createElement('script');
     script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
     script.async = true;
@@ -55,6 +71,9 @@ function MapWithSearch() {
       if (searchBox) {
         searchBox.removeListener('places_changed');
       }
+      if (directionsRenderer) {
+        directionsRenderer.setMap(null);
+      }
     };
   }, []);
 
@@ -65,20 +84,43 @@ function MapWithSearch() {
   const handleSearch = () => {
     if (searchInput && map) {
       const geocoder = new window.google.maps.Geocoder();
-
       geocoder.geocode({ address: searchInput }, (results, status) => {
         if (status === 'OK' && results.length > 0) {
           const result = results[0];
           const location = result.geometry.location;
           map.setCenter(location);
-          map.setZoom(15); // You can adjust the zoom level as needed
+          map.setZoom(15);
           setSelectedPlace({
             name: result.formatted_address,
-            location: {
-              lat: location.lat(),
-              lng: location.lng(),
-            },
+            geometry: { location: location }
           });
+        }
+      });
+    }
+  };
+
+  const handleGo = () => {
+    if (userLocation && selectedPlace && directionsService && directionsRenderer) {
+      const origin = userLocation;
+      const destination = selectedPlace.geometry.location;
+
+      directionsService.route({
+        origin: origin,
+        destination: destination,
+        travelMode: window.google.maps.TravelMode.DRIVING,
+      }, (response, status) => {
+        if (status === 'OK') {
+          directionsRenderer.setDirections(response);
+          const route = response.routes[0];
+          setDistance(route.legs[0].distance.text);
+          setDuration(route.legs[0].duration.text);
+
+          const destinationLat = destination.lat();
+          const destinationLng = destination.lng();
+          const googleMapsLink = `https://www.google.com/maps?q=${destinationLat},${destinationLng}`;
+          setGoogleMapsUrl(googleMapsLink);
+        } else {
+          window.alert('Directions request failed due to ' + status);
         }
       });
     }
@@ -93,18 +135,30 @@ function MapWithSearch() {
         value={searchInput}
         onChange={handleSearchInputChange}
       />
-      <button onClick={handleSearch}>Search</button>
+      <button onClick={handleSearch}>Find</button> 
+      <button onClick={handleGo}>Get Directions</button> 
+
       <div id="map" style={{ width: '100%', height: '400px' }}></div>
       {selectedPlace && (
         <div>
           <h2>Selected Place:</h2>
           <p>Name: {selectedPlace.name}</p>
-          <p>Latitude: {selectedPlace.location.lat}</p>
-          <p>Longitude: {selectedPlace.location.lng}</p>
+          <p>Latitude: {selectedPlace.geometry.location.lat()}</p>
+          <p>Longitude: {selectedPlace.geometry.location.lng()}</p>
+          {distance && duration && (
+            <div>
+              <p>Distance: {distance}</p>
+              <p>Duration: {duration}</p>
+              <p>Google Maps Link: <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></p>
+            </div>
+          )}
         </div>
       )}
     </div>
   );
+
 }
 
 export default MapWithSearch;
+
+
