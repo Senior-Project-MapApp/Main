@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import React from "react";
 import { Grid, Box, Button } from "@mui/material";
 import MapGraph from "./mapGraph";
 import AddTaskIcon from '@mui/icons-material/AddTask';
 
-function MapWithSearch() {
+function Map({data}) {
   const [map, setMap] = useState(null);
   const [searchBox, setSearchBox] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -170,6 +169,6 @@ function MapWithSearch() {
   );
 }
 
-export default MapWithSearch;
+export default Map;
 
 
