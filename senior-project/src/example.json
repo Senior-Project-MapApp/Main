@@ -1,23 +1,83 @@
-[
+{
+    "userID": 12345,
+    "userName": "Anna Mikhailenko",
+    "joined": "Septemper 13, 2020",
+    "locs": [{"location":"job", "index": 0},{"location": "home", "index": 1}],
+    "numloc": 2,
+    "numTasks": 9,
+    "doneTasks": 2,
+    "image": "./images/logo.png",
+    "data": [
     {
         "task": 1,
-        "priority": "low",
-        "status": "done",
-        "desc": "wash dishes",
+        "priority": 0,
+        "status": 1,
+        "name": "wash dishes",
+        "desc": "put dishes in dishwaser",
         "location": "job"
     },
     {
         "task": 2,
-        "priority": "high",
-        "status": "pending",
-        "desc": "do laundry",
+        "priority": 1,
+        "status": 1,
+        "name": "do laundry",
+        "desc": "put clothes in washing machine",
         "location": "home"
     },
     {
         "task": 3,
-        "priority": "medium",
-        "status": "not started",
-        "desc": "vacume house",
+        "priority": 0,
+        "status": 0,
+        "name": "vacume house",
+        "desc": "make sure the all the rooms are vacumed",
+        "location": "home"
+    },
+    {
+        "task": 4,
+        "priority": 0,
+        "status": 0,
+        "name": "wash dishes",
+        "desc": "put dishes in dishwaser",
+        "location": "job"
+    },
+    {
+        "task": 5,
+        "priority": 1,
+        "status": 0,
+        "name": "do laundry",
+        "desc": "put clothes in dryer",
+        "location": "home"
+    },
+    {
+        "task": 6,
+        "priority": 0,
+        "status": 0,
+        "name": "vacume house",
+        "desc": "turn on the rumba",
+        "location": "home"
+    } ,
+    {
+        "task": 7,
+        "priority": 1,
+        "status": 0,
+        "name": "wash dishes",
+        "desc": "put dishes in dishwaser",
+        "location": "job"
+    },
+    {
+        "task": 8,
+        "priority": 1,
+        "status": 0,
+        "name": "do laundry",
+        "desc": "hang clothes on clothes lime",
+        "location": "home"
+    },
+    {
+        "task": 9,
+        "priority": 0,
+        "status": 0,
+        "name": "vacume house",
+        "desc": "put away the chairs and wires before turning on the rumba",
         "location": "home"
     } 
-]
+]}

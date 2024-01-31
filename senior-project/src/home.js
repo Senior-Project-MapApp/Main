@@ -1,35 +1,18 @@
-import { TableBody, TableCell, TableContainer, TableHead, TableRow, Table, Paper } from "@mui/material";
-import data from "./example.json";
+import React from "react";
+import TableGraph from "./tableGraph";
+import {Box, Grid, Button } from "@mui/material";
+import AddTaskIcon from '@mui/icons-material/AddTask';
 
-function Home () {
+function Home ({data}) {
     return(
-        <>
-        Home sweet home
-        <TableContainer component={Paper}>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell align="center">Task</TableCell>
-                        <TableCell align="center">Description</TableCell>
-                        <TableCell align="center">Priority</TableCell>
-                        <TableCell align="center">Status</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                {data.map((dataObj, index) => {
-                    return (
-                        <TableRow>
-                            <TableCell align="center">{dataObj.task}</TableCell>
-                            <TableCell align="center">{dataObj.desc}</TableCell> 
-                            <TableCell align="center">{dataObj.priority}</TableCell> 
-                            <TableCell align="center">{dataObj.status}</TableCell>
-                        </TableRow>
-                    );
-                })}
-                </TableBody>
-            </Table>
-        </TableContainer>
-        </>
+        <Grid container direction={"row"}>
+            <Box sx={{width: "85%", margin: "auto"}}>
+                <TableGraph data={data}/>
+            </Box>
+            <Box sx={{width: "11%", marginTop: "2%",}}>
+                    <Button variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
+            </Box>
+        </Grid>
     );
 }
 
