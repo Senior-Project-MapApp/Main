@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Box, Button } from "@mui/material";
+import { Grid, Box, Button, TextField } from "@mui/material";
 import MapGraph from "./mapGraph";
 import AddTaskIcon from '@mui/icons-material/AddTask';
 
@@ -130,16 +130,19 @@ function Map({data}) {
   };
 
   return (
-    <div>
-      <input
+    <>
+   
+    <Grid container direction={"row"}>
+    <Box sx={{width: "60%"}}>
+      <TextField
         id="search-input"
         type="text"
-        placeholder="Search for a place"
+        defaultValue="Search for a place"
         value={searchInput}
         onChange={handleSearchInputChange}
       />
-      <button onClick={handleSearch}>Find</button> 
-      <button onClick={handleGo}>Get Directions</button> 
+      <Button variant="contained" onClick={handleSearch}>Find</Button> 
+      <Button variant="contained" onClick={handleGo}>Get Directions</Button> 
 
       <div id="map" style={{ width: '100%', height: '400px' }}></div>
       {selectedPlace && (
@@ -157,15 +160,13 @@ function Map({data}) {
           )}
         </div>
       )}
-      <Grid container direction={"row"}>
-            <Box sx={{width: "60%"}}>
-                <Button sx={{marginTop: "3%", marginLeft: "84%"}} variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
-            </Box>
-            <Box sx={{width: "40%"}}>
-                <MapGraph data={data}/>
-            </Box>
-        </Grid>
-    </div>
+        <Button sx={{marginTop: "3%", marginLeft: "84%"}} variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
+    </Box>
+    <Box sx={{width: "40%"}}>
+        <MapGraph data={data}/>
+    </Box>
+  </Grid>
+  </>
   );
 }
 
