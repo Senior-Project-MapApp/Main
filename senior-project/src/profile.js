@@ -37,6 +37,7 @@ function Profile ({data}) {
 
     return (
         <>
+        <Navbar data={data}/>
             <Grid container direction={"row"} sx={{ margin: "2%", marginTop: "2%"}}>
                 <Box sx={{width: "20%"}}>
                     <Tooltip title={data.userName}>

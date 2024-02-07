@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Grid, Box, Button } from "@mui/material";
 import MapGraph from "./mapGraph";
 import AddTaskIcon from '@mui/icons-material/AddTask';
+import Navbar from './navbar';
 
 function Map({data}) {
   const [map, setMap] = useState(null);
@@ -131,6 +132,7 @@ function Map({data}) {
 
   return (
     <div>
+      <Navbar data={data}/>
       <input
         id="search-input"
         type="text"

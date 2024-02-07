@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js"
 import { Button } from "@mui/material";
 
+export function getAuthentication(){
+    return authenticated;
+}
 
-function SignIn(){
+export default function SignIn(){
 // Your web app's Firebase configuration
     const firebaseConfig = {
         apiKey: "AIzaSyCHVKTXKKanaOKPR0iUnHHQ0XU3ZW3IOU0",
@@ -28,11 +31,12 @@ function SignIn(){
         prompt: "select_account"
     })
 
+    const [authenticated, setAuthenticated] = useState(false);
     onAuthStateChanged(auth, user => {
         if (user != null) {
-            console.log("Logged in: " + user.displayName);
+            setAuthenticated(true);
         } else {
-            console.log("Logged in: null");
+            setAuthenticated(false);
         }
     })
 
@@ -64,5 +68,3 @@ function SignIn(){
         </>
     );
 }
-
-export default SignIn;

@@ -6,6 +6,7 @@ import AddTaskIcon from '@mui/icons-material/AddTask';
 function Calendar ({data}) {
     return (
         <>
+        <Navbar data={data}/>
         <Grid container direction={"row"}>
             <Box sx={{width: "60%"}}>
                 <Button sx={{marginTop: "3%", marginLeft: "80%"}} variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
