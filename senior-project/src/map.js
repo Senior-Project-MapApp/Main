@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Box, Button, TextField } from "@mui/material";
+import { Grid, Box, Button, TextField, Typography } from "@mui/material";
 import MapGraph from "./mapGraph";
 import AddTaskIcon from '@mui/icons-material/AddTask';
 
@@ -130,42 +130,42 @@ function Map({data}) {
   };
 
   return (
-    <>
-   
+  <>
     <Grid container direction={"row"}>
-    <Box sx={{width: "60%"}}>
-      <TextField
-        id="search-input"
-        type="text"
-        defaultValue="Search for a place"
-        value={searchInput}
-        onChange={handleSearchInputChange}
-      />
-      <Button variant="contained" onClick={handleSearch}>Find</Button> 
-      <Button variant="contained" onClick={handleGo}>Get Directions</Button> 
-
-      <div id="map" style={{ width: '100%', height: '400px' }}></div>
-      {selectedPlace && (
-        <div>
-          <h2>Selected Place:</h2>
-          <p>Name: {selectedPlace.name}</p>
-          <p>Latitude: {selectedPlace.geometry.location.lat()}</p>
-          <p>Longitude: {selectedPlace.geometry.location.lng()}</p>
-          {distance && duration && (
-            <div>
-              <p>Distance: {distance}</p>
-              <p>Duration: {duration}</p>
-              <p>Google Maps Link: <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></p>
-            </div>
-          )}
-        </div>
-      )}
-        <Button sx={{marginTop: "3%", marginLeft: "84%"}} variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
-    </Box>
-    <Box sx={{width: "40%"}}>
-        <MapGraph data={data}/>
-    </Box>
-  </Grid>
+      <Box sx={{width: "60%"}}>
+        <Grid sx={{margin: "2%"}} container direction={"row"} columnGap={3}>
+          <TextField
+            id="search-input"
+            type="text"
+            label="Search for a place"
+            value={searchInput}
+            onChange={handleSearchInputChange}
+          />
+          <Button variant="contained" onClick={handleSearch}>Find</Button> 
+          <Button variant="contained" onClick={handleGo}>Get Directions</Button> 
+          <Button sx={{marginLeft: "27%"}} variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
+        </Grid>
+        <div id="map" style={{ width: '100%', height: '400px' }}></div>
+        {selectedPlace && (
+          <div>
+            <Typography variant='h2'>Selected Place:</Typography>
+            <Typography>Name: {selectedPlace.name}</Typography>
+            <Typography>Latitude: {selectedPlace.geometry.location.lat()}</Typography>
+            <Typography>Longitude: {selectedPlace.geometry.location.lng()}</Typography>
+            {distance && duration && (
+              <div>
+                <Typography>Distance: {distance}</Typography>
+                <Typography>Duration: {duration}</Typography>
+                <Typography>Google Maps Link: <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></Typography>
+              </div>
+            )}
+          </div>
+        )}
+      </Box>
+      <Box sx={{width: "40%"}}>
+          <MapGraph data={data}/>
+      </Box>
+    </Grid>
   </>
   );
 }
