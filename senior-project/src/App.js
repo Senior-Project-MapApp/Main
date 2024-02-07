@@ -4,6 +4,7 @@ import userData from "./example.json";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js"
 import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js"
+import SignIn from "./signIn";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -35,6 +36,7 @@ function App() {
     //Once the user signs in, they will be sent to the home page
   <>
     <Navbar data={userData}/>
+    <SignIn/>
   </>
   );
 }
