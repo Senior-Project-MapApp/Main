@@ -1,9 +1,5 @@
 import React from "react";
-import Home from "./home";
-import Map from "./map";
-import Calendar from "./calendar";
-import Profile from "./profile";
-import { Routes, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AppBar, IconButton, Toolbar, Box, Grid, Button, Avatar, Tooltip } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { green } from "@mui/material/colors";
@@ -36,15 +32,9 @@ function Navbar ({data}) {
                 <Avatar sx={{bgcolor: green[900], margin: 1}}></Avatar>
             </Tooltip>
             </Grid>
-        
         </AppBar>
     </Box>
-    <Routes>
-        <Route path="/home" element={<Home data={data}/>}/>
-        <Route path="/mapview" element={<Map data={data}/>}/>
-        <Route path="calendarview" element={<Calendar data={data}/>}/>
-        <Route path="profile" element={<Profile data={data}/>}/>
-    </Routes>
+
     </>
     );
 }

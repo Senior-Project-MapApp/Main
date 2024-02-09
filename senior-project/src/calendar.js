@@ -1,12 +1,12 @@
 import React from "react";
 import { Grid, Box, Button } from "@mui/material";
 import TableGraph from "./tableGraph";
+import Navbar from "./navbar";
 import AddTaskIcon from '@mui/icons-material/AddTask';
 
 function Calendar ({data}) {
     return (
         <>
-        <Navbar data={data}/>
         <Grid container direction={"row"}>
             <Box sx={{width: "60%"}}>
                 <Button sx={{marginTop: "3%", marginLeft: "80%"}} variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>

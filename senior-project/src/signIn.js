@@ -3,7 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebas
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js"
 import { Button } from "@mui/material";
 
-export function getAuthentication(){
+export function getAuthentication(authenticated){
     return authenticated;
 }
 
@@ -35,8 +35,10 @@ export default function SignIn(){
     onAuthStateChanged(auth, user => {
         if (user != null) {
             setAuthenticated(true);
+            getAuthentication(authenticated);
         } else {
             setAuthenticated(false);
+            getAuthentication(authenticated);
         }
     })
 

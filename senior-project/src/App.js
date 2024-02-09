@@ -1,12 +1,16 @@
 import React from "react";
 import { getAuthentication } from "./signIn";
-import userData from "./example.json";
+import data from "./example.json";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js"
 import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js"
 import SignIn from "./signIn";
-import { Switch } from "@mui/material";
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import Home from "./home";
+import Map from "./map";
+import Calendar from "./calendar";
+import Profile from "./profile";
+import { Route, Routes } from 'react-router-dom';
+import Navbar from "./navbar";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -37,14 +41,16 @@ function App() {
     //This is where the sign in page will be
     //Once the user signs in, they will be sent to the home page
   <>
-    <Router>
-      <Switch>
-        <Route path="/SignIn" Component={<SignIn/>}/>
-        <PrivateRoute path="/home" Component={<Home/> }/>
-        <Redirect from="/" to="/SignIn" />
-      </Switch>
-    </Router>
-    <SignIn/>
+      {getAuthentication ? <></> : <Navbar data={data}/>}
+      <Routes>
+        <Route path="/SignIn" element={<SignIn/>}/>
+        <Route path="/home" element={<Home data={data}/>}/>
+        <Route path="/mapview" element={<Map data={data}/>}/>
+        <Route path="calendarview" element={<Calendar data={data}/>}/>
+        <Route path="profile" element={<Profile data={data}/>}/>
+      </Routes>
+
+    {getAuthentication ? <SignIn/> : <></>}
   </>
   );
 }

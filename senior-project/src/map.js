@@ -132,7 +132,6 @@ function Map({data}) {
 
   return (
     <div>
-      <Navbar data={data}/>
       <input
         id="search-input"
         type="text"

@@ -4,6 +4,7 @@ import { green } from "@mui/material/colors";
 import ProfileStat from "./profileStat";
 import ProfileAccount from "./profileAccount";
 import Settings from "./settings";
+import Navbar from "./navbar";
 
 function Profile ({data}) {
 
@@ -37,7 +38,6 @@ function Profile ({data}) {
 
     return (
         <>
-        <Navbar data={data}/>
             <Grid container direction={"row"} sx={{ margin: "2%", marginTop: "2%"}}>
                 <Box sx={{width: "20%"}}>
                     <Tooltip title={data.userName}>
