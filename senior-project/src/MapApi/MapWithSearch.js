@@ -15,7 +15,7 @@ function MapWithSearch() {
   useEffect(() => {
     const initializeMap = () => {
       const mapOptions = {
-        center: { lat: 47.4914, lng: -117.5853 }, // Default center coordinates
+        center: { lat: 47.4914, lng: -117.5853 },
         zoom: 10,
       };
       const mapElement = document.getElementById('map');
@@ -156,9 +156,6 @@ function MapWithSearch() {
       )}
     </div>
   );
-
 }
 
 export default MapWithSearch;
-
-
