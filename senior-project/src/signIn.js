@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+/*import React, { useState } from "react";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js"
 import { Button } from "@mui/material";
@@ -34,9 +34,11 @@ export default function SignIn(){
     const [authenticated, setAuthenticated] = useState(false);
     onAuthStateChanged(auth, user => {
         if (user != null) {
+            console.log("Logged in: " + user.displayName);
             setAuthenticated(true);
             getAuthentication(authenticated);
         } else {
+            console.log("Logged in: null");
             setAuthenticated(false);
             getAuthentication(authenticated);
         }
@@ -70,3 +72,4 @@ export default function SignIn(){
         </>
     );
 }
+*/
