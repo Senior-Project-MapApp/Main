@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { getAuthentication } from "./signIn";
 import data from "./example.json";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
@@ -37,6 +37,40 @@ provider.setCustomParameters({
 })
 
 function App() {
+  const [authenticated, setAuthenticated] = useState(false);
+  onAuthStateChanged(auth, user => {
+    if (user != null) {
+      console.log("Logged in: " + user.displayName);
+      setAuthenticated(true);
+      getAuthentication(authenticated);
+    } else {
+      console.log("Logged in: null");
+      setAuthenticated(false);
+      getAuthentication(authenticated);
+    }
+  })
+
+  let user;
+  function HandleSignIn() {
+    setPersistence(auth, browserSessionPersistence).then(() => {
+      signInWithPopup(auth, provider).then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        user = result.user;
+      }).catch((error) => {
+        console.log(error);
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
+
+    return user;
+  }
+
+  function HandleSignOut() {
+    signOut(auth);
+  }
   return (
     //This is where the sign in page will be
     //Once the user signs in, they will be sent to the home page
