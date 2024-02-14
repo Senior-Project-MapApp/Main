@@ -1,5 +1,5 @@
 import Home from "./home";
-import Map from "./MapApi/MapWithSearch";
+import Map from "./map";
 import Calendar from "./calendar";
 import Profile from "./profile";
 import { Routes, Route, Link } from 'react-router-dom';
