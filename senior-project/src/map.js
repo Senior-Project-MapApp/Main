@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
+//import { Grid, Box, Button } from "@mui/material";
+//import MapGraph from "./mapGraph";
+//import AddTaskIcon from '@mui/icons-material/AddTask';
+import QRCode from 'qrcode.react';
 
-function MapWithSearch() {
+function Map({data}) {
   const [map, setMap] = useState(null);
   const [searchBox, setSearchBox] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -15,7 +19,7 @@ function MapWithSearch() {
   useEffect(() => {
     const initializeMap = () => {
       const mapOptions = {
-        center: { lat: 47.4914, lng: -117.5853 },
+        center: { lat: 47.4914, lng: -117.5853 }, // Default center coordinates
         zoom: 10,
       };
       const mapElement = document.getElementById('map');
@@ -150,6 +154,7 @@ function MapWithSearch() {
               <p>Distance: {distance}</p>
               <p>Duration: {duration}</p>
               <p>Google Maps Link: <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></p>
+              <QRCode value={googleMapsUrl} size={256} level={"H"} />
             </div>
           )}
         </div>
@@ -158,5 +163,4 @@ function MapWithSearch() {
   );
 }
 
-export default MapWithSearch;
-
+export default Map;
