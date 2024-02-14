@@ -130,6 +130,31 @@ function Map({data}) {
     }
   };
 
+  const handleRequestLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          setUserLocation(userLocation);
+          map.setCenter(userLocation);
+          new window.google.maps.Marker({
+            position: userLocation,
+            map: map,
+            title: "Your Location",
+          });
+        }, 
+        (error) => {
+          console.error("Error fetching location", error);
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  };
+
   return (
     <div>
       <input
@@ -141,6 +166,7 @@ function Map({data}) {
       />
       <button onClick={handleSearch}>Find</button> 
       <button onClick={handleGo}>Get Directions</button> 
+      <button onClick={handleRequestLocation}>Use My Location</button>
 
       <div id="map" style={{ width: '100%', height: '400px' }}></div>
       {selectedPlace && (
