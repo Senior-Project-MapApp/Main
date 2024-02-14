@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-//import { getAuthentication } from "./signIn";
 import data from "./example.json";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js"
@@ -11,13 +10,13 @@ import Calendar from "./calendar";
 import Profile from "./profile";
 import { Route, Routes } from 'react-router-dom';
 import Navbar from "./navbar";
-import {Button} from "@mui/material";
-
-
+import { Button } from "@mui/material";
 
 function App() {
-  // Firebase configuration
-  const firebaseConfig = {
+
+    const [sign, setSignIn] = useState(false);
+    // Firebase configuration
+    const firebaseConfig = {
     apiKey: "AIzaSyCHVKTXKKanaOKPR0iUnHHQ0XU3ZW3IOU0",
     authDomain: "task-map-7fc4c.firebaseapp.com",
     databaseURL: "https://task-map-7fc4c-default-rtdb.firebaseio.com",
@@ -27,7 +26,7 @@ function App() {
     appId: "1:198408367476:web:bb58ff1690677da05a9021"
   };
 
-// Initialize Firebase
+  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getDatabase(app);
@@ -46,6 +45,7 @@ function App() {
     if (user != null) {
       console.log("Logged in: " + user.displayName);
       authenticated = true;
+      setSignIn(authenticated);
       if (authenticated) {
         console.log("Authenticated");
       } else {
@@ -54,13 +54,14 @@ function App() {
     } else {
       console.log("Logged in: null");
       authenticated = false;
+      setSignIn(authenticated);
       if (authenticated) {
         console.log("Authenticated");
       } else {
         console.log("Not Authenticated");
       }
     }
-  })
+  });
 
   let user;
   function HandleSignIn() {
@@ -87,9 +88,8 @@ function App() {
     //This is where the sign in page will be
     //Once the user signs in, they will be sent to the home page
   <>
-    <Button onClick={HandleSignIn}>Sign In With Google</Button>
-    <Button onClick={HandleSignOut}>Sign Out</Button>
-      {authenticated ? <></> : <Navbar data={data}/>}
+      { sign ? <Navbar data={data}/> : <></>}
+      authenticated: {sign ? <h1>True</h1> : <h1>False</h1>}
       <Routes>
         <Route path="/SignIn" element={<SignIn/>}/>
         <Route path="/home" element={<Home data={data}/>}/>
@@ -98,7 +98,7 @@ function App() {
         <Route path="profile" element={<Profile data={data}/>}/>
       </Routes>
 
-    {authenticated ? <SignIn/> : <></>}
+    {sign ?  <></> : <Button onClick={HandleSignIn}>Sign In with Google</Button>}
   </>
   );
 }
