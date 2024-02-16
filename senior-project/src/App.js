@@ -89,13 +89,12 @@ function App() {
     //Once the user signs in, they will be sent to the home page
   <>
       { sign ? <Navbar data={data}/> : <></>}
-      authenticated: {sign ? <h1>True</h1> : <h1>False</h1>}
       <Routes>
         <Route path="/SignIn" element={<SignIn/>}/>
-        <Route path="/home" element={<Home data={data}/>}/>
-        <Route path="/mapview" element={<Map data={data}/>}/>
-        <Route path="calendarview" element={<Calendar data={data}/>}/>
-        <Route path="profile" element={<Profile data={data}/>}/>
+        <Route path="/home" element={<Home data={data} sign={sign}/>}/>
+        <Route path="/mapview" element={<Map data={data} sign={sign}/>}/>
+        <Route path="calendarview" element={<Calendar data={data} sign={sign}/>}/>
+        <Route path="profile" element={<Profile data={data} sign={sign}/>}/>
       </Routes>
 
     {sign ?  <></> : <Button onClick={HandleSignIn}>Sign In with Google</Button>}

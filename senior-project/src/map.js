@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Grid, Box, Button } from "@mui/material";
 import MapGraph from "./mapGraph";
 import AddTaskIcon from '@mui/icons-material/AddTask';
-import Navbar from './navbar';
+import { Navigate } from "react-router-dom";
 
-function Map({data}) {
+function Map({data, sign}) {
   const [map, setMap] = useState(null);
   const [searchBox, setSearchBox] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -130,44 +130,49 @@ function Map({data}) {
     }
   };
 
-  return (
-    <div>
-      <input
-        id="search-input"
-        type="text"
-        placeholder="Search for a place"
-        value={searchInput}
-        onChange={handleSearchInputChange}
-      />
-      <button onClick={handleSearch}>Find</button> 
-      <button onClick={handleGo}>Get Directions</button> 
+  if(sign){
+    return (
+      <div>
+        <input
+          id="search-input"
+          type="text"
+          placeholder="Search for a place"
+          value={searchInput}
+          onChange={handleSearchInputChange}
+        />
+        <button onClick={handleSearch}>Find</button> 
+        <button onClick={handleGo}>Get Directions</button> 
 
-      <div id="map" style={{ width: '100%', height: '400px' }}></div>
-      {selectedPlace && (
-        <div>
-          <h2>Selected Place:</h2>
-          <p>Name: {selectedPlace.name}</p>
-          <p>Latitude: {selectedPlace.geometry.location.lat()}</p>
-          <p>Longitude: {selectedPlace.geometry.location.lng()}</p>
-          {distance && duration && (
-            <div>
-              <p>Distance: {distance}</p>
-              <p>Duration: {duration}</p>
-              <p>Google Maps Link: <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></p>
-            </div>
-          )}
-        </div>
-      )}
-      <Grid container direction={"row"}>
-            <Box sx={{width: "60%"}}>
-                <Button sx={{marginTop: "3%", marginLeft: "84%"}} variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
-            </Box>
-            <Box sx={{width: "40%"}}>
-                <MapGraph data={data}/>
-            </Box>
-        </Grid>
-    </div>
-  );
+        <div id="map" style={{ width: '100%', height: '400px' }}></div>
+        {selectedPlace && (
+          <div>
+            <h2>Selected Place:</h2>
+            <p>Name: {selectedPlace.name}</p>
+            <p>Latitude: {selectedPlace.geometry.location.lat()}</p>
+            <p>Longitude: {selectedPlace.geometry.location.lng()}</p>
+            {distance && duration && (
+              <div>
+                <p>Distance: {distance}</p>
+                <p>Duration: {duration}</p>
+                <p>Google Maps Link: <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></p>
+              </div>
+            )}
+          </div>
+        )}
+        <Grid container direction={"row"}>
+              <Box sx={{width: "60%"}}>
+                  <Button sx={{marginTop: "3%", marginLeft: "84%"}} variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
+              </Box>
+              <Box sx={{width: "40%"}}>
+                  <MapGraph data={data}/>
+              </Box>
+          </Grid>
+      </div>
+    );
+  }
+  else{
+    return <Navigate replace to="/"/>
+  }
 }
 
 export default Map;
