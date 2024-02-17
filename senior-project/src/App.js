@@ -39,28 +39,16 @@ function App() {
     prompt: "select_account"
   })
 
-  //const [authenticated, setAuthenticated] = useState(false);
-  let authenticated = false;
-  onAuthStateChanged(auth, user => {
-    if (user != null) {
-      console.log("Logged in: " + user.displayName);
-      authenticated = true;
-      setSignIn(authenticated);
-      if (authenticated) {
-        console.log("Authenticated");
+  React.useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user != null) {
+        console.log("Logged in: " + user.displayName);
+        setSignIn(true);
       } else {
-        console.log("Not Authenticated");
+        console.log("Logged in: null");
+        setSignIn(false);
       }
-    } else {
-      console.log("Logged in: null");
-      authenticated = false;
-      setSignIn(authenticated);
-      if (authenticated) {
-        console.log("Authenticated");
-      } else {
-        console.log("Not Authenticated");
-      }
-    }
+    });
   });
 
   let user;
@@ -97,7 +85,7 @@ function App() {
         <Route path="profile" element={<Profile data={data} sign={sign}/>}/>
       </Routes>
 
-    {sign ?  <></> : <Button onClick={HandleSignIn}>Sign In with Google</Button>}
+    {sign ?  <Button onClick={HandleSignOut}>Sign Out</Button> : <Button onClick={HandleSignIn}>Sign In with Google</Button>}
   </>
   );
 }
