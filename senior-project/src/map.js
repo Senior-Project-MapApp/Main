@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Grid, Box, Button, TextField, Typography } from "@mui/material";
 import MapGraph from "./mapGraph";
 import AddTaskIcon from '@mui/icons-material/AddTask';
+import MapIcon from '@mui/icons-material/Map';
+import PlaceIcon from '@mui/icons-material/Place';
 
 function Map({data}) {
   const [map, setMap] = useState(null);
@@ -146,13 +148,17 @@ function Map({data}) {
           <Button variant="contained" onClick={handleGo}>Get Directions</Button> 
           <Button sx={{marginLeft: "27%"}} variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
         </Grid>
-        <div id="map" style={{ width: '100%', height: '400px' }}></div>
+        <div id="map" style={{ width: '100%', height: '100%' }}></div>
         {selectedPlace && (
-          <div>
-            <Typography variant='h2'>Selected Place:</Typography>
-            <Typography>Name: {selectedPlace.name}</Typography>
-            <Typography>Latitude: {selectedPlace.geometry.location.lat()}</Typography>
-            <Typography>Longitude: {selectedPlace.geometry.location.lng()}</Typography>
+          <Grid container direction={"column"} sx={{margin: "5%"}}>
+            <Grid container direction={"row"} columnGap={2} sx={{margin: "1%"}}>
+              <PlaceIcon fontSize='large'/>
+              <Typography variant='h5'>{selectedPlace.name}</Typography>
+            </Grid>
+            <Grid container direction={"row"} columnGap={2} sx={{margin: "1%"}}>
+              <MapIcon/>
+              <Typography>Latitude / Longitude: {selectedPlace.geometry.location.lat()}, {selectedPlace.geometry.location.lng()}</Typography>
+            </Grid>
             {distance && duration && (
               <div>
                 <Typography>Distance: {distance}</Typography>
@@ -160,7 +166,7 @@ function Map({data}) {
                 <Typography>Google Maps Link: <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></Typography>
               </div>
             )}
-          </div>
+          </Grid>
         )}
       </Box>
       <Box sx={{width: "40%"}}>
