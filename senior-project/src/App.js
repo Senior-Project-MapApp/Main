@@ -85,7 +85,7 @@ function App() {
         <Route path="profile" element={<Profile data={data} sign={sign}/>}/>
       </Routes>
 
-    {sign ? <></> : <Button onClick={HandleSignIn}>Sign In with Google</Button>}
+    {sign ? <></> : <SignIn HandleSignIn={HandleSignIn}/>}
   </>
   );
 }
