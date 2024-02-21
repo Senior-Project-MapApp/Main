@@ -76,7 +76,7 @@ function App() {
     //This is where the sign in page will be
     //Once the user signs in, they will be sent to the home page
   <>
-      { sign ? <Navbar data={data}/> : <></>}
+      { sign ? <Navbar data={data} HandleSignOut={HandleSignOut}/> : <></>}
       <Routes>
         <Route path="/SignIn" element={<SignIn/>}/>
         <Route path="/home" element={<Home data={data} sign={sign}/>}/>
@@ -85,7 +85,7 @@ function App() {
         <Route path="profile" element={<Profile data={data} sign={sign}/>}/>
       </Routes>
 
-    {sign ?  <Button onClick={HandleSignOut}>Sign Out</Button> : <Button onClick={HandleSignIn}>Sign In with Google</Button>}
+    {sign ? <></> : <Button onClick={HandleSignIn}>Sign In with Google</Button>}
   </>
   );
 }
