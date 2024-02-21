@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react';
-//import { Grid, Box, Button } from "@mui/material";
-//import MapGraph from "./mapGraph";
-//import AddTaskIcon from '@mui/icons-material/AddTask';
 import QRCode from 'qrcode.react';
 
 function Map({data}) {
@@ -43,22 +40,6 @@ function Map({data}) {
       setSearchBox(newSearchBox);
       setDirectionsService(newDirectionsService);
       setDirectionsRenderer(newDirectionsRenderer);
-
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          const userLocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-          setUserLocation(userLocation);
-          newMap.setCenter(userLocation);
-          new window.google.maps.Marker({
-            position: userLocation,
-            map: newMap,
-            title: "Your Location",
-          });
-        });
-      }
     };
 
     const script = document.createElement('script');
