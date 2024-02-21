@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode.react';
 
-function Map({data}) {
+function Map({ data }) {
   const [map, setMap] = useState(null);
   const [searchBox, setSearchBox] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -12,11 +12,12 @@ function Map({data}) {
   const [distance, setDistance] = useState(null);
   const [duration, setDuration] = useState(null);
   const [googleMapsUrl, setGoogleMapsUrl] = useState('');
+  const [waypoints, setWaypoints] = useState([]);
 
   useEffect(() => {
     const initializeMap = () => {
       const mapOptions = {
-        center: { lat: 47.4914, lng: -117.5853 }, // Default center coordinates
+        center: { lat: 47.4914, lng: -117.5853 },
         zoom: 10,
       };
       const mapElement = document.getElementById('map');
@@ -88,10 +89,16 @@ function Map({data}) {
     if (userLocation && selectedPlace && directionsService && directionsRenderer) {
       const origin = userLocation;
       const destination = selectedPlace.geometry.location;
+      const waypointsFormatted = waypoints.map(waypoint => ({
+        location: waypoint.geometry.location,
+        stopover: true,
+      }));
 
       directionsService.route({
         origin: origin,
         destination: destination,
+        waypoints: waypointsFormatted,
+        optimizeWaypoints: true,
         travelMode: window.google.maps.TravelMode.DRIVING,
       }, (response, status) => {
         if (status === 'OK') {
@@ -126,13 +133,20 @@ function Map({data}) {
             map: map,
             title: "Your Location",
           });
-        }, 
+        },
         (error) => {
           console.error("Error fetching location", error);
         }
       );
     } else {
       alert("Geolocation is not supported by this browser.");
+    }
+  };
+
+  const handleAddWaypoint = () => {
+    if (selectedPlace) {
+      setWaypoints(prevWaypoints => [...prevWaypoints, selectedPlace]);
+      alert(`Added "${selectedPlace.name}" as a waypoint.`);
     }
   };
 
@@ -145,9 +159,10 @@ function Map({data}) {
         value={searchInput}
         onChange={handleSearchInputChange}
       />
-      <button onClick={handleSearch}>Find</button> 
-      <button onClick={handleGo}>Get Directions</button> 
+      <button onClick={handleSearch}>Find</button>
+      <button onClick={handleGo}>Get Directions</button>
       <button onClick={handleRequestLocation}>Use My Location</button>
+      <button onClick={handleAddWaypoint}>Add Waypoint</button>
 
       <div id="map" style={{ width: '100%', height: '400px' }}></div>
       {selectedPlace && (
