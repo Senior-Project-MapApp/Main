@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import NewTaskModal from "./createNewTask";
 
-function Calendar ({data, sign}) {
+function Calendar ({data, sign, db, user}) {
 
     const [nTask, setNTask] = useState(false);
 
@@ -23,7 +23,7 @@ function Calendar ({data, sign}) {
             <Grid container direction={"row"}>
                 <Box sx={{width: "60%"}}>
                     <Button sx={{marginTop: "3%", marginLeft: "84%"}} variant="contained" endIcon={<AddTaskIcon/>} onClick={handleOpenModal}>New Task</Button>
-                    <NewTaskModal open={nTask} handleClose={handleClose}/>
+                    <NewTaskModal open={nTask} handleClose={handleClose} db={db} user={user}/>
                 </Box>
                 <Box sx={{width: "40%"}}>
                     <TableGraph data={data}/>

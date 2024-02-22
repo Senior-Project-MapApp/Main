@@ -78,9 +78,9 @@ function App() {
       { sign ? <Navbar data={data} HandleSignOut={HandleSignOut}/> : <></>}
       <Routes>
         <Route path="/SignIn" element={<SignIn/>}/>
-        <Route path="/home" element={<Home data={data} sign={sign}/>}/>
-        <Route path="/mapview" element={<Map data={data} sign={sign}/>}/>
-        <Route path="calendarview" element={<Calendar data={data} sign={sign}/>}/>
+        <Route path="/home" element={<Home data={data} sign={sign} db={db} user={user}/>}/>
+        <Route path="/mapview" element={<Map data={data} sign={sign} db={db} user={user}/>}/>
+        <Route path="calendarview" element={<Calendar data={data} sign={sign} db={db} user={user}/>}/>
         <Route path="profile" element={<Profile data={data} sign={sign}/>}/>
       </Routes>
 

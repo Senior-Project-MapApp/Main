@@ -5,7 +5,7 @@ import AddTaskIcon from '@mui/icons-material/AddTask';
 import { Navigate } from "react-router-dom";
 import NewTaskModal from './createNewTask';
 
-function Map({data, sign}) {
+function Map({data, sign, db, user}) {
   const [map, setMap] = useState(null);
   const [searchBox, setSearchBox] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -172,7 +172,7 @@ function Map({data, sign}) {
         <Grid container direction={"row"}>
               <Box sx={{width: "60%"}}>
                   <Button sx={{marginTop: "3%", marginLeft: "84%"}} variant="contained" endIcon={<AddTaskIcon/>} onClick={handleOpenModal}>New Task</Button>
-                  <NewTaskModal open={nTask} handleClose={handleClose}/>
+                  <NewTaskModal open={nTask} handleClose={handleClose} db={db} user={user}/>
               </Box>
               <Box sx={{width: "40%"}}>
                   <MapGraph data={data}/>

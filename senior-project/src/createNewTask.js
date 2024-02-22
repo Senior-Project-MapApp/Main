@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import React, { useState } from "react";
 
-function NewTaskModal({open, handleClose}){
+function NewTaskModal({open, handleClose, db, user}){
 
     const [date, setDate] = useState(new Date());
 
@@ -21,7 +21,7 @@ function NewTaskModal({open, handleClose}){
                 </Grid>
                 <Grid container direction={"row"} justifyContent={"center"} alignItems={"center"} columnGap={4}>
                     <Typography>Task Description:</Typography>
-                    <TextField color="secondary" variant="outlined" label="Description"/>
+                    <TextField multiline color="secondary" variant="outlined" label="Description"/>
                 </Grid>
                 <Grid container direction={"row"} justifyContent={"center"} alignItems={"center"} columnGap={4}>
                     <Typography>Task Location:</Typography>
