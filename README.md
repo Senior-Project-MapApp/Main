@@ -21,6 +21,8 @@ You will also need to install:
 
     npm install @mui/material @emotion/react @emotion/styled
 
+    npm install react-datepicker
+
     npm install react
     npm install react-dom
     npm install @react-google-maps/api

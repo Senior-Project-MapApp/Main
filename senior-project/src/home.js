@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState }  from "react";
 import TableGraph from "./tableGraph";
 import {Box, Grid, Button } from "@mui/material";
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import { Navigate } from "react-router-dom";
+import NewTaskModal from "./createNewTask";
 
 function Home ({data, sign}) {
+
+    const [nTask, setNTask] = useState(false);
+
+    const handleOpenModal = () => {
+        setNTask(true);
+    };
+
+    const handleClose = () => {
+        setNTask(false);
+    }
+
     if(sign){
         return(
             <Grid container direction={"row"}>
@@ -12,7 +24,8 @@ function Home ({data, sign}) {
                     <TableGraph data={data}/>
                 </Box>
                 <Box sx={{width: "11%", marginTop: "2%",}}>
-                        <Button variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
+                        <Button variant="contained" endIcon={<AddTaskIcon/>} onClick={handleOpenModal}>New Task</Button>
+                        <NewTaskModal open={nTask} handleClose={handleClose}/>
                 </Box>
             </Grid>
         );
