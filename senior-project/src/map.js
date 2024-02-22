@@ -3,6 +3,7 @@ import { Grid, Box, Button } from "@mui/material";
 import MapGraph from "./mapGraph";
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import { Navigate } from "react-router-dom";
+import NewTaskModal from './createNewTask';
 
 function Map({data, sign}) {
   const [map, setMap] = useState(null);
@@ -15,6 +16,15 @@ function Map({data, sign}) {
   const [distance, setDistance] = useState(null);
   const [duration, setDuration] = useState(null);
   const [googleMapsUrl, setGoogleMapsUrl] = useState('');
+  const [nTask, setNTask] = useState(false);
+
+  const handleOpenModal = () => {
+      setNTask(true);
+  };
+
+  const handleClose = () => {
+      setNTask(false);
+  }
 
   useEffect(() => {
     const initializeMap = () => {
@@ -161,7 +171,8 @@ function Map({data, sign}) {
         )}
         <Grid container direction={"row"}>
               <Box sx={{width: "60%"}}>
-                  <Button sx={{marginTop: "3%", marginLeft: "84%"}} variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
+                  <Button sx={{marginTop: "3%", marginLeft: "84%"}} variant="contained" endIcon={<AddTaskIcon/>} onClick={handleOpenModal}>New Task</Button>
+                  <NewTaskModal open={nTask} handleClose={handleClose}/>
               </Box>
               <Box sx={{width: "40%"}}>
                   <MapGraph data={data}/>
