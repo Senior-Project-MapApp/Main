@@ -2,6 +2,7 @@ import { Button, Dialog, DialogTitle, Grid, TextField, Typography } from "@mui/m
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import React, { useState } from "react";
+import { ref, set } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js"
 
 function NewTaskModal({open, handleClose, db, user}){
 
@@ -34,3 +35,28 @@ function NewTaskModal({open, handleClose, db, user}){
 }
 
 export default NewTaskModal;
+
+const createTaskBtn = document.getElementById('createTaskBtn');
+createTaskBtn.addEventListener("click", () => {
+    const title = document.getElementById('setTitle').value;
+    const description = document.getElementById('setDescription').value;
+    const date = document.getElementById('setDate').value;
+    const time = document.getElementById('setTime').value;
+    const prio = document.getElementById('setPrio').value;
+    const location = document.getElementById('setLocation').value;
+    if (user && title) {
+        const reference = ref(db, 'testapp/users/' + user.uid + '/' + title);
+        set(reference, {
+            desc: description,
+            date: date,
+            time: time,
+            prio: prio,
+            loc: location
+        }).catch((error) => {
+            console.log(error);
+        });
+        console.log("End Create Task")
+    } else {
+        alert("You must be logged in and input a title to create a task!")
+    }
+});
