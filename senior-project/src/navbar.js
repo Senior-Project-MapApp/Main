@@ -30,7 +30,7 @@ function Navbar ({user, HandleSignOut}) {
             <Button to="/profile" LinkComponent={Link} color="secondary" >Profile</Button>
             <Button color="secondary" onClick={HandleSignOut}>Sign Out</Button>
             <Tooltip title={user.displayName}>
-                <Avatar sx={{bgcolor: green[900], margin: 1}}></Avatar>
+                <Avatar sx={{bgcolor: green[900], margin: 1}} src={user.photoURL}></Avatar>
             </Tooltip>
             </Grid>
         </AppBar>

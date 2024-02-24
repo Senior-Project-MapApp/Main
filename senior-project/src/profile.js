@@ -68,9 +68,9 @@ function Profile ({user, data, sign}) {
                         </List>
                     </Box>
                     <Divider orientation="vertical" flexItem />
-                    {showStat === 1 ? <ProfileStat data={data}/> : <></>}
+                    {showStat === 1 ? <ProfileStat data={data} user={user}/> : <></>}
                     {showAccount === 1 ? <ProfileAccount data={data} user={user}/> : <></>}
-                    {showSetting === 1 ? <Settings data={data}/> : <></>}
+                    {showSetting === 1 ? <Settings data={data} user={user}/> : <></>}
                 </Grid>
             </>
         );
