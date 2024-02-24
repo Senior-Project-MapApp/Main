@@ -7,7 +7,7 @@ import Settings from "./settings";
 import { Navigate } from "react-router-dom";
 
 
-function Profile ({data, sign}) {
+function Profile ({user, data, sign}) {
 
     const [showStat, setShowStat] = useState(0);
     const [showSetting, setShowSetting] = useState(0);
@@ -42,8 +42,8 @@ function Profile ({data, sign}) {
             <>
                 <Grid container direction={"row"} sx={{ margin: "2%", marginTop: "2%"}}>
                     <Box sx={{width: "20%"}}>
-                        <Tooltip title={data.userName}>
-                            <Avatar variant="circular" sx={{bgcolor: green[900], margin: "auto", width: 200, height: 200}}></Avatar>
+                        <Tooltip title={user.displayName}>
+                            <Avatar variant="circular" src={user.photoURL} sx={{bgcolor: green[900], margin: "auto", width: 200, height: 200}}></Avatar>
                         </Tooltip>
                         <List sx={{marginTop: "5%"}}>
                             <Divider variant="middle"/>
@@ -69,7 +69,7 @@ function Profile ({data, sign}) {
                     </Box>
                     <Divider orientation="vertical" flexItem />
                     {showStat === 1 ? <ProfileStat data={data}/> : <></>}
-                    {showAccount === 1 ? <ProfileAccount data={data}/> : <></>}
+                    {showAccount === 1 ? <ProfileAccount data={data} user={user}/> : <></>}
                     {showSetting === 1 ? <Settings data={data}/> : <></>}
                 </Grid>
             </>

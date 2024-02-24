@@ -30,6 +30,7 @@ function App() {
   const auth = getAuth(app);
   const db = getDatabase(app);
   const provider = new GoogleAuthProvider();
+  const currUser = auth.currentUser;
 
   provider.addScope('https://www.googleapis.com/auth/calendar'); //See, edit, share, and permanently delete all the calendars you can access using Google Calendar
   provider.addScope('https://www.googleapis.com/auth/contacts.readonly'); //See and download your contacts
@@ -75,13 +76,13 @@ function App() {
     //This is where the sign in page will be
     //Once the user signs in, they will be sent to the home page
   <>
-      { sign ? <Navbar data={data} HandleSignOut={HandleSignOut}/> : <></>}
+      { sign ? <Navbar user={currUser} HandleSignOut={HandleSignOut}/> : <></>}
       <Routes>
         <Route path="/SignIn" element={<SignIn/>}/>
         <Route path="/home" element={<Home data={data} sign={sign} db={db} user={user}/>}/>
         <Route path="/mapview" element={<Map data={data} sign={sign} db={db} user={user}/>}/>
         <Route path="calendarview" element={<Calendar data={data} sign={sign} db={db} user={user}/>}/>
-        <Route path="profile" element={<Profile data={data} sign={sign}/>}/>
+        <Route path="profile" element={<Profile user={currUser} data={data} sign={sign}/>}/>
       </Routes>
 
     {sign ? <></> : <SignIn HandleSignIn={HandleSignIn}/>}

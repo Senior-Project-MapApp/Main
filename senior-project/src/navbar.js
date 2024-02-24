@@ -6,7 +6,7 @@ import { green } from "@mui/material/colors";
 import logo from "./images/logo.png";
 
 
-function Navbar ({data, HandleSignOut}) {
+function Navbar ({user, HandleSignOut}) {
 
     return (
     <>
@@ -29,7 +29,7 @@ function Navbar ({data, HandleSignOut}) {
             <Button to="/calendarview" LinkComponent={Link} color="secondary" >Calendar</Button>
             <Button to="/profile" LinkComponent={Link} color="secondary" >Profile</Button>
             <Button color="secondary" onClick={HandleSignOut}>Sign Out</Button>
-            <Tooltip title={data.userName}>
+            <Tooltip title={user.displayName}>
                 <Avatar sx={{bgcolor: green[900], margin: 1}}></Avatar>
             </Tooltip>
             </Grid>
