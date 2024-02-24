@@ -9,11 +9,11 @@ import Mytheme from "./theme";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-  <ThemeProvider theme={Mytheme}>   
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-  </ThemeProvider>
+    <ThemeProvider theme={Mytheme}>   
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </ThemeProvider>
   </BrowserRouter>
 );
 
