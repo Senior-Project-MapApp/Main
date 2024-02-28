@@ -80,9 +80,9 @@ function App() {
       { sign ? <Navbar user={currUser} HandleSignOut={HandleSignOut}/> : <></>}
       <Routes>
         <Route path="/SignIn" element={<SignIn/>}/>
-        <Route path="/home" element={<Home data={data} sign={sign} db={db} user={user}/>}/>
-        <Route path="/mapview" element={<Map data={data} sign={sign} db={db} user={user}/>}/>
-        <Route path="calendarview" element={<Calendar data={data} sign={sign} db={db} user={user}/>}/>
+        <Route path="/home" element={<Home data={data} sign={sign} db={db} user={currUser}/>}/>
+        <Route path="/mapview" element={<Map data={data} sign={sign} db={db} user={currUser}/>}/>
+        <Route path="calendarview" element={<Calendar data={data} sign={sign} db={db} user={currUser}/>}/>
         <Route path="profile" element={<Profile user={currUser} data={data} sign={sign}/>}/>
       </Routes>
 
