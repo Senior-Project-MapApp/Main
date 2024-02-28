@@ -13,16 +13,16 @@ import Navbar from "./navbar";
 
 function App() {
 
-    const [sign, setSignIn] = useState(false);
-    // Firebase configuration
-    const firebaseConfig = {
-    apiKey: "AIzaSyCHVKTXKKanaOKPR0iUnHHQ0XU3ZW3IOU0",
-    authDomain: "task-map-7fc4c.firebaseapp.com",
-    databaseURL: "https://task-map-7fc4c-default-rtdb.firebaseio.com",
-    projectId: "task-map-7fc4c",
-    storageBucket: "task-map-7fc4c.appspot.com",
-    messagingSenderId: "198408367476",
-    appId: "1:198408367476:web:bb58ff1690677da05a9021"
+  const [sign, setSignIn] = useState(false);
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyCq6prs9r1LLrSalIXgRTgqQuXRqWmcecY",
+    authDomain: "task-map-v2.firebaseapp.com",
+    databaseURL: "https://task-map-v2-default-rtdb.firebaseio.com",
+    projectId: "task-map-v2",
+    storageBucket: "task-map-v2.appspot.com",
+    messagingSenderId: "694269819083",
+    appId: "1:694269819083:web:8cd740c6d16742b1b3434e"
   };
 
   // Initialize Firebase
