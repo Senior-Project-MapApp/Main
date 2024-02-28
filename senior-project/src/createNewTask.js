@@ -40,6 +40,18 @@ function NewTaskModal({open, handleClose, db, user}){
         alert("You must be logged in and input a title to create a task!")
     }
     });*/
+    const createTask = () => {
+        const reference = ref(db, 'users/' + user.uid + '/' + title);
+        set(reference, {
+            startDate: startD,
+            endDate: endD,
+            desc: description,
+            loc: location
+        }).catch((error) => {
+            console.log(error);
+        });
+        handleClose();
+    }
 
     return(
         <Dialog fullWidth onClose={handleClose} open={open}>
@@ -61,7 +73,7 @@ function NewTaskModal({open, handleClose, db, user}){
                     <Typography>Task Location:</Typography>
                     <TextField color="secondary" variant="outlined" label="Location"/>
                 </Grid>
-                <Button variant="contained" type="submit" onClick={handleClose}>Create</Button>
+                <Button variant="contained" type="submit" onClick={createTask}>Create</Button>
             </Grid>
         </Dialog>
     );
