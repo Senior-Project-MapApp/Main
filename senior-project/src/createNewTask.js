@@ -16,30 +16,7 @@ function NewTaskModal({open, handleClose, db, user}){
         setEndD(endD);
     };
 
-   /* const createTaskBtn = document.getElementById('createTaskBtn');
-    createTaskBtn.addEventListener("click", () => {
-    const title = document.getElementById('setTitle').value;
-    const description = document.getElementById('setDescription').value;
-    const date = document.getElementById('setDate').value;
-    const time = document.getElementById('setTime').value;
-    const prio = document.getElementById('setPrio').value;
-    const location = document.getElementById('setLocation').value;
-    if (user && title) {
-        const reference = ref(db, 'testapp/users/' + user.uid + '/' + title);
-        set(reference, {
-            desc: description,
-            date: date,
-            time: time,
-            prio: prio,
-            loc: location
-        }).catch((error) => {
-            console.log(error);
-        });
-        console.log("End Create Task")
-    } else {
-        alert("You must be logged in and input a title to create a task!")
-    }
-    });*/
+
     const createTask = () => {
         const reference = ref(db, 'users/' + user.uid + '/' + title);
         set(reference, {
