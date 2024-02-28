@@ -9,6 +9,9 @@ function NewTaskModal({open, handleClose, db, user}){
     const [date, setDate] = useState(new Date());
     const [startD, setStartD] = useState();
     const [endD, setEndD] = useState();
+    const [taskName, setTaskName] = useState('');
+    const [description, setDescription] = useState('');
+    const [location, setLocation] = useState('');
 
     const handleChange = (range) => {
         const [startD, endD] = range;
@@ -16,9 +19,18 @@ function NewTaskModal({open, handleClose, db, user}){
         setEndD(endD);
     };
 
+    const handleTaskNameChange = (e) => {
+        setTaskName(e.target.value);
+      };
+      const handleDescriptionChange = (e) => {
+        setDescription(e.target.value);
+      };
+      const handleLocationChange = (e) => {
+        setLocation(e.target.value);
+      };
 
     const createTask = () => {
-        const reference = ref(db, 'users/' + user.uid + '/' + title);
+        const reference = ref(db, 'users/' + user.uid + '/' + taskName);
         set(reference, {
             startDate: startD,
             endDate: endD,
@@ -40,15 +52,15 @@ function NewTaskModal({open, handleClose, db, user}){
                 </Grid>
                 <Grid container direction={"row"} justifyContent={"center"} alignItems={"center"} columnGap={4}>
                     <Typography>Task Name:</Typography>
-                    <TextField color="secondary" variant="outlined" label="Task Name"/>
+                    <TextField color="secondary" variant="outlined" label="Task Name" onChange={handleTaskNameChange}/>
                 </Grid>
                 <Grid container direction={"row"} justifyContent={"center"} alignItems={"center"} columnGap={4}>
                     <Typography>Task Description:</Typography>
-                    <TextField multiline color="secondary" variant="outlined" label="Description"/>
+                    <TextField multiline color="secondary" variant="outlined" label="Description" onChange={handleDescriptionChange}/>
                 </Grid>
                 <Grid container direction={"row"} justifyContent={"center"} alignItems={"center"} columnGap={4}>
                     <Typography>Task Location:</Typography>
-                    <TextField color="secondary" variant="outlined" label="Location"/>
+                    <TextField color="secondary" variant="outlined" label="Location" onChange={handleLocationChange}/>
                 </Grid>
                 <Button variant="contained" type="submit" onClick={createTask}>Create</Button>
             </Grid>
