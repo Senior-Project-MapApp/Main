@@ -11,6 +11,8 @@ import Profile from "./profile";
 import { Route, Routes } from 'react-router-dom';
 import Navbar from "./navbar";
 
+export let accessToken; //for calendar
+
 function App() {
 
   const [sign, setSignIn] = useState(false);
@@ -57,7 +59,7 @@ function App() {
     setPersistence(auth, browserSessionPersistence).then(() => {
       signInWithPopup(auth, provider).then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
+        accessToken = credential.accessToken; //for calendar
         // The signed-in user info.
         user = result.user;
       }).catch((error) => {
