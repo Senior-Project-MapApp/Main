@@ -32,8 +32,8 @@ function NewTaskModal({open, handleClose, db, user}){
     const createTask = () => {
         const reference = ref(db, 'users/' + user.uid + '/' + taskName);
         set(reference, {
-            startDate: startD,
-            endDate: endD,
+            startDate: startD.toString(),
+            endDate: endD.toString(),
             desc: description,
             loc: location
         }).catch((error) => {
