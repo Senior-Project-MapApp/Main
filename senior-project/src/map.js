@@ -1,26 +1,31 @@
 import React, { useEffect, useState } from 'react';
+
 import { Grid, Box, Button, TextField, Typography } from "@mui/material";
 import MapGraph from "./mapGraph";
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import MapIcon from '@mui/icons-material/Map';
 import PlaceIcon from '@mui/icons-material/Place';
+import QRCode from 'qrcode.react';
 
-function Map({data}) {
+function Map({ data }) { 
+
   const [map, setMap] = useState(null);
   const [searchBox, setSearchBox] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [searchInput, setSearchInput] = useState('');
   const [directionsService, setDirectionsService] = useState(null);
   const [directionsRenderer, setDirectionsRenderer] = useState(null);
-  const [userLocation, setUserLocation] = useState(null);
-  const [distance, setDistance] = useState(null);
-  const [duration, setDuration] = useState(null);
+  const [startLocation, setStartLocation] = useState(null);
+  const [destination, setDestination] = useState(null);
+  const [waypoints, setWaypoints] = useState(data?.waypoints || []); 
+  const [distance, setDistance] = useState('');
+  const [duration, setDuration] = useState('');
   const [googleMapsUrl, setGoogleMapsUrl] = useState('');
 
   useEffect(() => {
     const initializeMap = () => {
       const mapOptions = {
-        center: { lat: 47.4914, lng: -117.5853 }, // Default center coordinates
+        center: data?.initialCenter || { lat: 47.4914, lng: -117.5853 }, 
         zoom: 10,
       };
       const mapElement = document.getElementById('map');
@@ -31,35 +36,18 @@ function Map({data}) {
 
       const input = document.getElementById('search-input');
       const newSearchBox = new window.google.maps.places.SearchBox(input);
-
       newSearchBox.addListener('places_changed', () => {
-        const newPlaces = newSearchBox.getPlaces();
-        if (newPlaces.length > 0) {
-          const place = newPlaces[0];
-          setSelectedPlace(place);
+        const places = newSearchBox.getPlaces();
+        if (places.length === 0) {
+          return;
         }
+        setSelectedPlace(places[0]);
       });
 
       setMap(newMap);
       setSearchBox(newSearchBox);
       setDirectionsService(newDirectionsService);
       setDirectionsRenderer(newDirectionsRenderer);
-
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          const userLocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-          setUserLocation(userLocation);
-          newMap.setCenter(userLocation);
-          new window.google.maps.Marker({
-            position: userLocation,
-            map: newMap,
-            title: "Your Location",
-          });
-        });
-      }
     };
 
     const script = document.createElement('script');
@@ -71,68 +59,104 @@ function Map({data}) {
     document.head.appendChild(script);
 
     return () => {
-      if (map) {
-        map.setMap(null);
-      }
-      if (searchBox) {
-        searchBox.removeListener('places_changed');
-      }
-      if (directionsRenderer) {
-        directionsRenderer.setMap(null);
-      }
+      directionsRenderer?.setMap(null);
     };
-  }, []);
+  }, [data]); 
+
+  //REMOVE AT RELEASE JUST FOR TESTING PURPOSES
+  const handleUseMyLocation = () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        setStartLocation(pos);
+        map.setCenter(pos);
+
+       
+        if (window.userLocationMarker) {
+          window.userLocationMarker.setMap(null);
+        }
+
+        
+        const marker = new window.google.maps.Marker({
+          position: pos,
+          map: map,
+          title: "Your Location",
+        });
+
+       
+        window.userLocationMarker = marker;
+
+      },
+      () => {
+        alert("The Geolocation service failed.");
+      }
+    );
+  } else {
+    alert("Your browser doesn't support geolocation.");
+  }
+};
+
+
+  const handleSetAsStart = () => {
+    if (selectedPlace) {
+      setStartLocation(selectedPlace.geometry.location);
+    } else {
+      alert("Please search for a location first.");
+    }
+  };
+
+  const handleSetAsDestination = () => {
+    if (selectedPlace) {
+      setDestination(selectedPlace);
+      setGoogleMapsUrl(`https://www.google.com/maps/dir/?api=1&destination=${selectedPlace.geometry.location.lat()},${selectedPlace.geometry.location.lng()}`);
+    } else {
+      alert("Please search for a location first.");
+    }
+  };
+
+  const handleAddWaypoint = () => {
+    if (selectedPlace) {
+      setWaypoints([...waypoints, { location: selectedPlace.geometry.location, stopover: true }]);
+    } else {
+      alert("Please search for a location first.");
+    }
+  };
+
+  const handleGetDirections = () => {
+    if (!startLocation || !destination) {
+      alert("Please set both a start location and a destination.");
+      return;
+    }
+
+    const request = {
+      origin: startLocation,
+      destination: destination.geometry.location,
+      waypoints: waypoints,
+      travelMode: window.google.maps.TravelMode.DRIVING,
+    };
+
+    directionsService.route(request, (result, status) => {
+      if (status === window.google.maps.DirectionsStatus.OK) {
+        directionsRenderer.setDirections(result);
+        const leg = result.routes[0].legs[0];
+        setDistance(leg.distance.text);
+        setDuration(leg.duration.text);
+      } else {
+        alert(`Directions request failed due to ${status}`);
+      }
+    });
+  };
 
   const handleSearchInputChange = (e) => {
     setSearchInput(e.target.value);
   };
 
-  const handleSearch = () => {
-    if (searchInput && map) {
-      const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode({ address: searchInput }, (results, status) => {
-        if (status === 'OK' && results.length > 0) {
-          const result = results[0];
-          const location = result.geometry.location;
-          map.setCenter(location);
-          map.setZoom(15);
-          setSelectedPlace({
-            name: result.formatted_address,
-            geometry: { location: location }
-          });
-        }
-      });
-    }
-  };
-
-  const handleGo = () => {
-    if (userLocation && selectedPlace && directionsService && directionsRenderer) {
-      const origin = userLocation;
-      const destination = selectedPlace.geometry.location;
-
-      directionsService.route({
-        origin: origin,
-        destination: destination,
-        travelMode: window.google.maps.TravelMode.DRIVING,
-      }, (response, status) => {
-        if (status === 'OK') {
-          directionsRenderer.setDirections(response);
-          const route = response.routes[0];
-          setDistance(route.legs[0].distance.text);
-          setDuration(route.legs[0].duration.text);
-
-          const destinationLat = destination.lat();
-          const destinationLng = destination.lng();
-          const googleMapsLink = `https://www.google.com/maps?q=${destinationLat},${destinationLng}`;
-          setGoogleMapsUrl(googleMapsLink);
-        } else {
-          window.alert('Directions request failed due to ' + status);
-        }
-      });
-    }
-  };
-
   return (
+
   <>
     <Grid container direction={"row"}>
       <Box sx={{width: "60%"}}>
@@ -144,8 +168,12 @@ function Map({data}) {
             value={searchInput}
             onChange={handleSearchInputChange}
           />
-          <Button variant="contained" onClick={handleSearch}>Find</Button> 
-          <Button variant="contained" onClick={handleGo}>Get Directions</Button> 
+          <Button variant="contained" onClick={handleGetDirections}>Get Directions</Button> 
+          <Button variant="contained" onClick={handleUseMyLocation}>Use My Location</Button>
+          <Button variant="contained" onClick={handleSetAsStart}>Set as Start</Button>
+          <Button variant="contained" onClick={handleSetAsDestination}>Set as Destination</Button>
+          <Button variant="contained" onClick={handleAddWaypoint}>Add Waypoint</Button>
+
           <Button sx={{marginLeft: "27%"}} variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
         </Grid>
         <div id="map" style={{ width: '100%', height: '100%' }}></div>
@@ -164,6 +192,7 @@ function Map({data}) {
                 <Typography>Distance: {distance}</Typography>
                 <Typography>Duration: {duration}</Typography>
                 <Typography>Google Maps Link: <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></Typography>
+                <QRCode value={googleMapsUrl} size={128} level={"H"} />
               </div>
             )}
           </Grid>
@@ -174,9 +203,8 @@ function Map({data}) {
       </Box>
     </Grid>
   </>
+
   );
 }
 
 export default Map;
-
-
