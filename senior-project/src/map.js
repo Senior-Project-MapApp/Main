@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
+
+import { Grid, Box, Button, TextField, Typography } from "@mui/material";
+import MapGraph from "./mapGraph";
+import AddTaskIcon from '@mui/icons-material/AddTask';
+import MapIcon from '@mui/icons-material/Map';
+import PlaceIcon from '@mui/icons-material/Place';
 import QRCode from 'qrcode.react';
 
-function Map({ data }) { // Accepting `data` as a prop
+function Map({ data }) { 
+
   const [map, setMap] = useState(null);
   const [searchBox, setSearchBox] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -10,7 +17,7 @@ function Map({ data }) { // Accepting `data` as a prop
   const [directionsRenderer, setDirectionsRenderer] = useState(null);
   const [startLocation, setStartLocation] = useState(null);
   const [destination, setDestination] = useState(null);
-  const [waypoints, setWaypoints] = useState(data?.waypoints || []); // Initialize waypoints from data
+  const [waypoints, setWaypoints] = useState(data?.waypoints || []); 
   const [distance, setDistance] = useState('');
   const [duration, setDuration] = useState('');
   const [googleMapsUrl, setGoogleMapsUrl] = useState('');
@@ -18,7 +25,7 @@ function Map({ data }) { // Accepting `data` as a prop
   useEffect(() => {
     const initializeMap = () => {
       const mapOptions = {
-        center: data?.initialCenter || { lat: 47.4914, lng: -117.5853 }, // Use initialCenter from data if available
+        center: data?.initialCenter || { lat: 47.4914, lng: -117.5853 }, 
         zoom: 10,
       };
       const mapElement = document.getElementById('map');
@@ -45,6 +52,7 @@ function Map({ data }) { // Accepting `data` as a prop
 
     const script = document.createElement('script');
     script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
+    console.log(`API Key: ${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`);
     script.async = true;
     script.defer = true;
     script.onload = initializeMap;
@@ -53,27 +61,45 @@ function Map({ data }) { // Accepting `data` as a prop
     return () => {
       directionsRenderer?.setMap(null);
     };
-  }, [data]); // Add `data` as a dependency to re-initialize if it changes
+  }, [data]); 
 
+  //REMOVE AT RELEASE JUST FOR TESTING PURPOSES
   const handleUseMyLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-          setStartLocation(pos);
-          map.setCenter(pos);
-        },
-        () => {
-          alert("The Geolocation service failed.");
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        setStartLocation(pos);
+        map.setCenter(pos);
+
+       
+        if (window.userLocationMarker) {
+          window.userLocationMarker.setMap(null);
         }
-      );
-    } else {
-      alert("Your browser doesn't support geolocation.");
-    }
-  };
+
+        
+        const marker = new window.google.maps.Marker({
+          position: pos,
+          map: map,
+          title: "Your Location",
+        });
+
+       
+        window.userLocationMarker = marker;
+
+      },
+      () => {
+        alert("The Geolocation service failed.");
+      }
+    );
+  } else {
+    alert("Your browser doesn't support geolocation.");
+  }
+};
+
 
   const handleSetAsStart = () => {
     if (selectedPlace) {
@@ -130,34 +156,54 @@ function Map({ data }) { // Accepting `data` as a prop
   };
 
   return (
-    <div>
-      <input
-        id="search-input"
-        type="text"
-        placeholder="Search for a place"
-        value={searchInput}
-        onChange={handleSearchInputChange}
-      />
-      <button onClick={handleUseMyLocation}>Use My Location</button>
-      <button onClick={handleSetAsStart}>Set as Start</button>
-      <button onClick={handleSetAsDestination}>Set as Destination</button>
-      <button onClick={handleAddWaypoint}>Add Waypoint</button>
-      <button onClick={handleGetDirections}>Get Directions</button>
 
-      <div id="map" style={{ width: '100%', height: '400px' }}></div>
-      {destination && (
-        <div>
-          <h2>Destination:</h2>
-          <p>Name: {destination.name}</p>
-          <p>Latitude: {destination.geometry.location.lat()}</p>
-          <p>Longitude: {destination.geometry.location.lng()}</p>
-          <p>Distance: {distance}</p>
-          <p>Duration: {duration}</p>
-          <p>Google Maps Link: <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></p>
-          <QRCode value={googleMapsUrl} size={128} level={"H"} />
-        </div>
-      )}
-    </div>
+  <>
+    <Grid container direction={"row"}>
+      <Box sx={{width: "60%"}}>
+        <Grid sx={{margin: "2%"}} container direction={"row"} columnGap={3}>
+          <TextField
+            id="search-input"
+            type="text"
+            label="Search for a place"
+            value={searchInput}
+            onChange={handleSearchInputChange}
+          />
+          <Button variant="contained" onClick={handleGetDirections}>Get Directions</Button> 
+          <Button variant="contained" onClick={handleUseMyLocation}>Use My Location</Button>
+          <Button variant="contained" onClick={handleSetAsStart}>Set as Start</Button>
+          <Button variant="contained" onClick={handleSetAsDestination}>Set as Destination</Button>
+          <Button variant="contained" onClick={handleAddWaypoint}>Add Waypoint</Button>
+
+          <Button sx={{marginLeft: "27%"}} variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
+        </Grid>
+        <div id="map" style={{ width: '100%', height: '100%' }}></div>
+        {selectedPlace && (
+          <Grid container direction={"column"} sx={{margin: "5%"}}>
+            <Grid container direction={"row"} columnGap={2} sx={{margin: "1%"}}>
+              <PlaceIcon fontSize='large'/>
+              <Typography variant='h5'>{selectedPlace.name}</Typography>
+            </Grid>
+            <Grid container direction={"row"} columnGap={2} sx={{margin: "1%"}}>
+              <MapIcon/>
+              <Typography>Latitude / Longitude: {selectedPlace.geometry.location.lat()}, {selectedPlace.geometry.location.lng()}</Typography>
+            </Grid>
+            {distance && duration && (
+              <div>
+                <Typography>Distance: {distance}</Typography>
+                <Typography>Duration: {duration}</Typography>
+                <Typography>Google Maps Link: <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></Typography>
+                <QRCode value={googleMapsUrl} size={128} level={"H"} />
+              </div>
+            )}
+          </Grid>
+        )}
+      </Box>
+      <Box sx={{width: "40%"}}>
+          <MapGraph data={data}/>
+      </Box>
+    </Grid>
+  </>
+
   );
 }
 
