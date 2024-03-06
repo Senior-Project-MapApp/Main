@@ -12,20 +12,12 @@ inside that .env file place 'REACT_APP_GOOGLE_MAPS_API_KEY=' and your api key. F
 
 If you havent already, instal node.js from the official website: https://nodejs.org/en/download/current
 
+To start the react app, run:
 
-   
+     npm install @mui/material react-router-dom @emotion/react @emotion/styled @react-google-maps/api react react-dom react-datepicker
 
-You will also need to install:
+Then:
 
-    npm install react-router-dom
-
-    npm install @mui/material @emotion/react @emotion/styled
-
-    npm install react-datepicker
-
-    npm install react
-    npm install react-dom
-    npm install @react-google-maps/api
      npm start
 
   to start the react app.
