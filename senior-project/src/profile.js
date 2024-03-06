@@ -49,7 +49,7 @@ function Profile ({user, data, sign}) {
                             <Divider variant="middle"/>
                             <ListItem>
                                 <ListItemButton>
-                                    <ListItemText primary="Acount" onClick={handleAccountClick}/>
+                                    <ListItemText primary="Account" onClick={handleAccountClick}/>
                                 </ListItemButton>
                             </ListItem>
                             <Divider variant="middle"/>
