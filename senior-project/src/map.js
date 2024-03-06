@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, {QRCode, useEffect, useState } from 'react';
 import { Grid, Box, Button, Typography, TextField } from "@mui/material";
 import MapGraph from "./mapGraph";
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import MapIcon from '@mui/icons-material/Map';
 import PlaceIcon from '@mui/icons-material/Place';
-import QRCode from 'qrcode.react';
 import DirectionsCarFilledIcon from '@mui/icons-material/DirectionsCarFilled';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import LinkIcon from '@mui/icons-material/Link';
@@ -160,7 +159,6 @@ function Map({data, sign, db, user}) {
 
   if(sign){
     return (
-
       <>
         <Grid container direction={"row"}>
           <Box sx={{width: "60%"}}>
