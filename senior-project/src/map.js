@@ -2,6 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Grid, Box, Button } from "@mui/material";
 import MapGraph from "./mapGraph";
 import AddTaskIcon from '@mui/icons-material/AddTask';
+import MapIcon from '@mui/icons-material/Map';
+import PlaceIcon from '@mui/icons-material/Place';
+import QRCode from 'qrcode.react';
+import DirectionsCarFilledIcon from '@mui/icons-material/DirectionsCarFilled';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import LinkIcon from '@mui/icons-material/Link';
 import { Navigate } from "react-router-dom";
 import NewTaskModal from './createNewTask';
 
@@ -162,9 +168,19 @@ function Map({data, sign, db, user}) {
             <p>Longitude: {selectedPlace.geometry.location.lng()}</p>
             {distance && duration && (
               <div>
-                <p>Distance: {distance}</p>
-                <p>Duration: {duration}</p>
-                <p>Google Maps Link: <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></p>
+                <Grid container direction={"row"} columnGap={2} sx={{margin: "1%"}}>
+                  <DirectionsCarFilledIcon/>
+                  <Typography>Distance: {distance}</Typography>
+                </Grid>
+                <Grid container direction={"row"} columnGap={2} sx={{margin: "1%"}}>
+                  <AccessTimeIcon/>
+                  <Typography>Duration: {duration}</Typography>
+                </Grid>
+                <Grid container direction={"row"} columnGap={2} sx={{margin: "1%"}}>
+                  <LinkIcon/>
+                  <Typography>Google Maps Link: <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></Typography>
+                </Grid>
+                <QRCode value={googleMapsUrl} size={128} level={"H"} />
               </div>
             )}
           </div>
