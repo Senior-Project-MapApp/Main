@@ -6,6 +6,9 @@ import AddTaskIcon from '@mui/icons-material/AddTask';
 import MapIcon from '@mui/icons-material/Map';
 import PlaceIcon from '@mui/icons-material/Place';
 import QRCode from 'qrcode.react';
+import DirectionsCarFilledIcon from '@mui/icons-material/DirectionsCarFilled';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import LinkIcon from '@mui/icons-material/Link';
 
 function Map({ data }) { 
 
@@ -160,21 +163,25 @@ function Map({ data }) {
   <>
     <Grid container direction={"row"}>
       <Box sx={{width: "60%"}}>
-        <Grid sx={{margin: "2%"}} container direction={"row"} columnGap={3}>
-          <TextField
-            id="search-input"
-            type="text"
-            label="Search for a place"
-            value={searchInput}
-            onChange={handleSearchInputChange}
-          />
-          <Button variant="contained" onClick={handleGetDirections}>Get Directions</Button> 
-          <Button variant="contained" onClick={handleUseMyLocation}>Use My Location</Button>
-          <Button variant="contained" onClick={handleSetAsStart}>Set as Start</Button>
-          <Button variant="contained" onClick={handleSetAsDestination}>Set as Destination</Button>
-          <Button variant="contained" onClick={handleAddWaypoint}>Add Waypoint</Button>
+      <Grid container direction={"column"} rowGap={1}>
+          <Grid sx={{margin: "2%"}} container direction={"row"} columnGap={3}>
+            <TextField
+              id="search-input"
+              type="text"
+              label="Search for a place"
+              value={searchInput}
+              onChange={handleSearchInputChange}
+            />
+            <Button variant="contained" onClick={handleGetDirections}>Get Directions</Button> 
+            <Button sx={{marginLeft: "37%"}} variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
+          </Grid>
+          <Grid sx={{margin: "2%"}} container direction={"row"} columnGap={3}>
+            <Button variant="contained" onClick={handleUseMyLocation}>Use My Location</Button>
+            <Button variant="contained" onClick={handleSetAsStart}>Set as Start</Button>
+            <Button variant="contained" onClick={handleSetAsDestination}>Set as Destination</Button>
+            <Button variant="contained" onClick={handleAddWaypoint}>Add Waypoint</Button>
 
-          <Button sx={{marginLeft: "27%"}} variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
+          </Grid>
         </Grid>
         <div id="map" style={{ width: '100%', height: '100%' }}></div>
         {selectedPlace && (
@@ -189,9 +196,18 @@ function Map({ data }) {
             </Grid>
             {distance && duration && (
               <div>
-                <Typography>Distance: {distance}</Typography>
-                <Typography>Duration: {duration}</Typography>
-                <Typography>Google Maps Link: <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></Typography>
+                <Grid container direction={"row"} columnGap={2} sx={{margin: "1%"}}>
+                  <DirectionsCarFilledIcon/>
+                  <Typography>Distance: {distance}</Typography>
+                </Grid>
+                <Grid container direction={"row"} columnGap={2} sx={{margin: "1%"}}>
+                  <AccessTimeIcon/>
+                  <Typography>Duration: {duration}</Typography>
+                </Grid>
+                <Grid container direction={"row"} columnGap={2} sx={{margin: "1%"}}>
+                  <LinkIcon/>
+                  <Typography>Google Maps Link: <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></Typography>
+                </Grid>
                 <QRCode value={googleMapsUrl} size={128} level={"H"} />
               </div>
             )}
