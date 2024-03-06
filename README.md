@@ -14,7 +14,7 @@ If you havent already, instal node.js from the official website: https://nodejs.
 
 To start the react app, run:
 
-     npm install @mui/material react-router-dom @emotion/react @emotion/styled @react-google-maps/api react react-dom react-datepicker
+     npm install @mui/material react-router-dom @emotion/react @emotion/styled @react-google-maps/api react react-dom react-datepicker date-fns react-big-calendar gapi-script @floating-ui/core
 
 Then:
 
