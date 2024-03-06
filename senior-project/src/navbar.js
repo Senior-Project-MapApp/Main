@@ -1,16 +1,12 @@
 import React from "react";
-import Home from "./home";
-import Map from "./map";
-import Calendar from "./calendar";
-import Profile from "./profile";
-import { Routes, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AppBar, IconButton, Toolbar, Box, Grid, Button, Avatar, Tooltip } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { green } from "@mui/material/colors";
 import logo from "./images/logo.png";
 
 
-function Navbar ({data}) {
+function Navbar ({user, HandleSignOut}) {
 
     return (
     <>
@@ -32,19 +28,14 @@ function Navbar ({data}) {
             <Button to="/mapview" LinkComponent={Link} color="secondary" >Map</Button>
             <Button to="/calendarview" LinkComponent={Link} color="secondary" >Calendar</Button>
             <Button to="/profile" LinkComponent={Link} color="secondary" >Profile</Button>
-            <Tooltip title={data.userName}>
-                <Avatar sx={{bgcolor: green[900], margin: 1}}></Avatar>
+            <Button color="secondary" onClick={HandleSignOut}>Sign Out</Button>
+            <Tooltip title={user.displayName}>
+                <Avatar sx={{bgcolor: green[900], margin: 1}} src={user.photoURL}></Avatar>
             </Tooltip>
             </Grid>
-        
         </AppBar>
     </Box>
-    <Routes>
-        <Route path="/home" element={<Home data={data}/>}/>
-        <Route path="/mapview" element={<Map data={data}/>}/>
-        <Route path="calendarview" element={<Calendar data={data}/>}/>
-        <Route path="profile" element={<Profile data={data}/>}/>
-    </Routes>
+
     </>
     );
 }
