@@ -148,54 +148,68 @@ function Map({data, sign, db, user}) {
 
   if(sign){
     return (
-      <div>
-        <input
-          id="search-input"
-          type="text"
-          placeholder="Search for a place"
-          value={searchInput}
-          onChange={handleSearchInputChange}
-        />
-        <button onClick={handleSearch}>Find</button> 
-        <button onClick={handleGo}>Get Directions</button> 
 
-        <div id="map" style={{ width: '100%', height: '400px' }}></div>
-        {selectedPlace && (
-          <div>
-            <h2>Selected Place:</h2>
-            <p>Name: {selectedPlace.name}</p>
-            <p>Latitude: {selectedPlace.geometry.location.lat()}</p>
-            <p>Longitude: {selectedPlace.geometry.location.lng()}</p>
-            {distance && duration && (
-              <div>
-                <Grid container direction={"row"} columnGap={2} sx={{margin: "1%"}}>
-                  <DirectionsCarFilledIcon/>
-                  <Typography>Distance: {distance}</Typography>
-                </Grid>
-                <Grid container direction={"row"} columnGap={2} sx={{margin: "1%"}}>
-                  <AccessTimeIcon/>
-                  <Typography>Duration: {duration}</Typography>
-                </Grid>
-                <Grid container direction={"row"} columnGap={2} sx={{margin: "1%"}}>
-                  <LinkIcon/>
-                  <Typography>Google Maps Link: <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></Typography>
-                </Grid>
-                <QRCode value={googleMapsUrl} size={128} level={"H"} />
-              </div>
-            )}
-          </div>
-        )}
+      <>
         <Grid container direction={"row"}>
-              <Box sx={{width: "60%"}}>
-                  <Button sx={{marginTop: "3%", marginLeft: "84%"}} variant="contained" endIcon={<AddTaskIcon/>} onClick={handleOpenModal}>New Task</Button>
-                  <NewTaskModal open={nTask} handleClose={handleClose} db={db} user={user}/>
-              </Box>
-              <Box sx={{width: "40%"}}>
-                  <MapGraph data={data}/>
-              </Box>
-          </Grid>
-      </div>
-    );
+          <Box sx={{width: "60%"}}>
+          <Grid container direction={"column"} rowGap={1}>
+              <Grid sx={{margin: "2%"}} container direction={"row"} columnGap={3}>
+                <TextField
+                  id="search-input"
+                  type="text"
+                  label="Search for a place"
+                  value={searchInput}
+                  onChange={handleSearchInputChange}
+                />
+                <Button variant="contained" onClick={handleGetDirections}>Get Directions</Button> 
+                <Button sx={{marginLeft: "37%"}} variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
+              </Grid>
+              <Grid sx={{margin: "2%"}} container direction={"row"} columnGap={3}>
+                <Button variant="contained" onClick={handleUseMyLocation}>Use My Location</Button>
+                <Button variant="contained" onClick={handleSetAsStart}>Set as Start</Button>
+                <Button variant="contained" onClick={handleSetAsDestination}>Set as Destination</Button>
+                <Button variant="contained" onClick={handleAddWaypoint}>Add Waypoint</Button>
+    
+              </Grid>
+            </Grid>
+            <div id="map" style={{ width: '100%', height: '100%' }}></div>
+            {selectedPlace && (
+              <Grid container direction={"column"} sx={{margin: "5%"}}>
+                <Grid container direction={"row"} columnGap={2} sx={{margin: "1%"}}>
+                  <PlaceIcon fontSize='large'/>
+                  <Typography variant='h5'>{selectedPlace.name}</Typography>
+                </Grid>
+                <Grid container direction={"row"} columnGap={2} sx={{margin: "1%"}}>
+                  <MapIcon/>
+                  <Typography>Latitude / Longitude: {selectedPlace.geometry.location.lat()}, {selectedPlace.geometry.location.lng()}</Typography>
+                </Grid>
+                {distance && duration && (
+                  <div>
+                    <Grid container direction={"row"} columnGap={2} sx={{margin: "1%"}}>
+                      <DirectionsCarFilledIcon/>
+                      <Typography>Distance: {distance}</Typography>
+                    </Grid>
+                    <Grid container direction={"row"} columnGap={2} sx={{margin: "1%"}}>
+                      <AccessTimeIcon/>
+                      <Typography>Duration: {duration}</Typography>
+                    </Grid>
+                    <Grid container direction={"row"} columnGap={2} sx={{margin: "1%"}}>
+                      <LinkIcon/>
+                      <Typography>Google Maps Link: <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></Typography>
+                    </Grid>
+                    <QRCode value={googleMapsUrl} size={128} level={"H"} />
+                  </div>
+                )}
+              </Grid>
+            )}
+          </Box>
+          <Box sx={{width: "40%"}}>
+              <MapGraph data={data}/>
+          </Box>
+        </Grid>
+      </>
+    
+      );
   }
   else{
     return <Navigate replace to="/"/>
