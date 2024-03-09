@@ -32,7 +32,6 @@ function App() {
   const auth = getAuth(app);
   const db = getDatabase(app);
   const provider = new GoogleAuthProvider();
-  const currUser = auth.currentUser;
 
   provider.addScope('https://www.googleapis.com/auth/calendar'); //See, edit, share, and permanently delete all the calendars you can access using Google Calendar
   provider.addScope('https://www.googleapis.com/auth/calendar.events'); //Calendar events
@@ -42,65 +41,68 @@ function App() {
     prompt: "select_account"
   })
 
+  const [currUser, setCurrUser] = useState(auth.currentUser);
+  const [task, setTask] = useState(null);
+
   React.useEffect(() => {
     onAuthStateChanged(auth, user => {
       if (user != null) {
-        console.log("Logged in: " + user.displayName);
         setSignIn(true);
+        setCurrUser(user);
+        console.log("Logged in: " + user.displayName);
       } else {
         console.log("Logged in: null");
         setSignIn(false);
+        setCurrUser(null);
       }
     });
   });
 
-  let user;
   function HandleSignIn() {
     setPersistence(auth, browserSessionPersistence).then(() => {
       signInWithPopup(auth, provider).then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         accessToken = credential.accessToken; //for calendar
-        // The signed-in user info.
-        user = result.user;
       }).catch((error) => {
         console.log(error);
       });
     }).catch((error) => {
       console.log(error);
     });
-
-    return user;
   }
 
   function HandleSignOut() {
     signOut(auth);
   }
 
-    let description, endDate, startDate, loc, tasks, i;
-    const getTask = () => {
-        const reference = ref(db, 'users/' + user.uid + '/test'/* + title*/);
-        onValue(reference, (snapshot) => {
-            description = snapshot.val().desc;
-            endDate = snapshot.val().endDate;
-            startDate = snapshot.val().startDate;
-            loc = snapshot.val().loc;
-        }, {
-            onlyOnce: true
-        });
+  const defaultRef = "users/" + currUser.uid;
+  const getTask = (title) => {
+    if (currUser != null) {
+      const reference = ref(db, defaultRef + '/' + title);
+      onValue(reference, (snapshot) => {
+        const description = snapshot.val().desc;
+        const endDate = snapshot.val().endDate;
+        const startDate = snapshot.val().startDate;
+        const loc = snapshot.val().loc;
+        setTask([title + description + startDate + endDate + loc]);
+      }, {
+        onlyOnce: true
+      });
     }
+  }
 
-    const getAllTasks = () => {
-        const reference = ref(db, 'users/' + user.uid);
-        onValue(reference, (snapshot) => {
-            tasks = snapshot.val();
-        }, {
-            onlyOnce: true
-        });
-        for (i = 0; i < tasks.length; i++) {
-            console.log('Title: ' + tasks[i]);
-        }
+  const getAllTasks = () => {
+    if (currUser != null) {
+      const reference = ref(db, defaultRef);
+      onValue(reference, (snapshot) => {
+        const allTasks = snapshot.val();
+        setTask(allTasks);
+      }, {
+        onlyOnce: true
+      });
     }
-  
+  }
+
   return (
     //This is where the sign in page will be
     //Once the user signs in, they will be sent to the home page
