@@ -1,14 +1,22 @@
 import React, {useState} from "react";
 import data from "./example.json";
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js"
-import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js"
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
+import {
+  browserSessionPersistence,
+  getAuth,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  setPersistence,
+  signInWithPopup,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js"
+import {getDatabase, onValue, ref} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js"
 import SignIn from "./signIn";
 import Home from "./home";
 import Map from "./map";
 import Calendar from "./calendar";
 import Profile from "./profile";
-import { Route, Routes } from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import Navbar from "./navbar";
 
 export let accessToken; //for calendar
@@ -75,10 +83,9 @@ function App() {
     signOut(auth);
   }
 
-  const defaultRef = "users/" + currUser.uid;
   const getTask = (title) => {
     if (currUser != null) {
-      const reference = ref(db, defaultRef + '/' + title);
+      const reference = ref(db, "users/" + currUser.uid + '/' + title);
       onValue(reference, (snapshot) => {
         const description = snapshot.val().desc;
         const endDate = snapshot.val().endDate;
@@ -91,12 +98,12 @@ function App() {
     }
   }
 
-  const getAllTasks = () => {
-    if (currUser != null) {
-      const reference = ref(db, defaultRef);
+  const getAllTasks = (user, db) => {
+    if (user != null) {
+      const reference = ref(db, "users/" + user.uid);
       onValue(reference, (snapshot) => {
-        const allTasks = snapshot.val();
-        setTask(allTasks);
+        console.log(snapshot.val());
+        return snapshot.val();
       }, {
         onlyOnce: true
       });

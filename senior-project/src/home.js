@@ -17,7 +17,7 @@ function Home ({data, sign, db, user, getTask, getAllTasks}) {
         setNTask(false);
     }
 
-    let tasks = getAllTasks();
+    let tasks = getAllTasks(user, db);
 
     if(sign){
         return(
