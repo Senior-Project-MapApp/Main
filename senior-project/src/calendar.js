@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 
 import format from "date-fns/format";
 import getDay from "date-fns/getDay";
@@ -7,14 +7,13 @@ import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { gapi } from "gapi-script";
 import { Grid, Box, Button } from "@mui/material";
 import TableGraph from "./tableGraph";
 import AddTaskIcon from '@mui/icons-material/AddTask';
 
-import { accessToken } from "./App.js";
+import App, { accessToken } from "./App.js";
 import NewTaskModal from './createNewTask';
 
 const locales = {
@@ -29,12 +28,7 @@ const localizer = dateFnsLocalizer({
     locales
 })
 
-function Calendar1 ({user, db, sign}) {
-    
-    React.useEffect(() => { // automatically gets all calendar events from Google upon rendering
-        getEvents();;
-    }, []);
-
+function Calendar1 ({user, db, sign, data, getAllTasks, getTask}) {
     const calendarID = user.email; 
     const ImportedAccessToken = accessToken;
 
@@ -42,6 +36,19 @@ function Calendar1 ({user, db, sign}) {
     const [allEvents, setAllEvents] = useState([]);
     const [selected, setSelected] = useState();
     const [nTask, setNTask] = useState(false);
+    const [showList, setShowList] = useState(false);
+    const [boxWidth, setBoxWidth] = useState(100);
+    const [tasks, setTasks] = useState(getAllTasks(user, db))
+
+    React.useEffect(() => { // shows or hides list on the right of screen
+        handleAddEventsFromDB(); //gets all calendar events from db
+        getEvents(); // gets all calendar events from Google
+        if (showList === false) { //adjustsbox width 
+            setBoxWidth(100);
+        } else {
+            setBoxWidth(70);
+        }
+    }, [showList]);
 
     const handleOpenModal = () => {
         setNTask(true);
@@ -57,7 +64,7 @@ function Calendar1 ({user, db, sign}) {
         }, 
         []
     )
-    
+   
     function eventPropGetter(event) {
         var style = {
             backgroundColor: event.color,
@@ -69,6 +76,18 @@ function Calendar1 ({user, db, sign}) {
         };
     }
     
+    function handleAddEventsFromDB() {
+        for (const property in tasks) {
+            console.log(`${property}: ${tasks[property]}`);
+        }
+        /*tasks.forEach(task => {
+            const title = task.desc;
+            const start = task.endDate;
+            const end = task.startDate;
+            setAllEvents( (allEvents) => ( [...allEvents, {title: title, start: start, end: end, color: "#c6e1a5"}]));
+        });*/
+    }
+
     function handleAddAllEvents(events){ //adds to local calendar from array returned from Google
         setAllEvents([]);
         events.forEach(event => {
@@ -275,14 +294,22 @@ function Calendar1 ({user, db, sign}) {
         return (
             <>
             <Grid container direction={"row"}>
-                <Box sx={{width: "100%"}}>
-                    <div className="Calendar">
-                        <div>
-                            <h1>
-                                <Button sx={{marginTop: "3%", marginLeft: "5%"}} variant="contained" endIcon={<AddTaskIcon/>} onClick={handleOpenModal}>New Task</Button>
-                                <NewTaskModal open={nTask} handleClose={handleClose} db={db} user={user}/>
-                            </h1>
-                        </div>
+                <Box sx={{width: `${boxWidth}%`}}>
+                    <div>
+                        <h1>
+                            <Button sx={{marginTop: "3%", marginLeft: "5%"}} variant="contained" endIcon={<AddTaskIcon/>} onClick={handleOpenModal}>New Task</Button>
+                            <NewTaskModal open={nTask} handleClose={handleClose} db={db} user={user}/>
+                            
+                            <Button 
+                                sx={{marginTop: "3%", marginLeft: "5%"}} 
+                                variant="contained" endIcon={<AddTaskIcon/>} 
+                                onClick={() => setShowList(!showList)}>
+                                {showList ? "Hide" : "Show"} list
+                            </Button>
+                            
+                        </h1>
+                    </div>
+                    <div>
                         <Calendar 
                             localizer={localizer}
                             events={allEvents}
@@ -295,6 +322,11 @@ function Calendar1 ({user, db, sign}) {
                             endAccessor="end" 
                             style={{ height: 500, margin: "50px" }} 
                         />
+                    </div>
+                </Box>
+                <Box sx={{width: `${100-boxWidth}%`}}>
+                    <div className="Calendar">
+                        {showList ? <TableGraph data={data}/>  : null} 
                     </div>
                 </Box>
             </Grid>
