@@ -78,7 +78,7 @@ function App() {
 
     let description, endDate, startDate, loc, tasks, i;
     const getTask = () => {
-        const reference = ref(db, 'users/' + user.uid + '/test'/* + title*/);
+        const reference = ref(db, 'users/' + currUser.uid + '/test'/* + title*/);
         onValue(reference, (snapshot) => {
             description = snapshot.val().desc;
             endDate = snapshot.val().endDate;
@@ -90,15 +90,13 @@ function App() {
     }
 
     const getAllTasks = () => {
-        const reference = ref(db, 'users/' + user.uid);
+        const reference = ref(db, 'users/' + currUser.uid);
         onValue(reference, (snapshot) => {
             tasks = snapshot.val();
         }, {
             onlyOnce: true
         });
-        for (i = 0; i < tasks.length; i++) {
-            console.log('Title: ' + tasks[i]);
-        }
+        return tasks
     }
   
   return (
@@ -108,7 +106,7 @@ function App() {
       { sign ? <Navbar user={currUser} HandleSignOut={HandleSignOut}/> : <></>}
       <Routes>
         <Route path="/SignIn" element={<SignIn/>}/>
-        <Route path="/home" element={<Home data={data} sign={sign} db={db} user={currUser}/>}/>
+        <Route path="/home" element={<Home data={data} sign={sign} db={db} user={currUser} getTask={getTask} getAllTasks={getAllTasks}/>}/>
         <Route path="/mapview" element={<Map data={data} sign={sign} db={db} user={currUser}/>}/>
         <Route path="calendarview" element={<Calendar data={data} sign={sign} db={db} user={currUser}/>}/>
         <Route path="profile" element={<Profile user={currUser} data={data} sign={sign}/>}/>
