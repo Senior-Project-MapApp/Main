@@ -12,6 +12,27 @@ function NewTaskModal({open, handleClose, db, user}){
     const [taskName, setTaskName] = useState('');
     const [description, setDescription] = useState('');
     const [location, setLocation] = useState('');
+    const [coords, setCoords] = useState(null); 
+
+
+    useEffect(() => {
+        const loadGoogleMapsScript = () => {
+            if (!document.querySelector('script[src="https://maps.googleapis.com/maps/api/js"]')) {
+                const script = document.createElement('script');
+                script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
+                script.async = true;
+                document.body.appendChild(script);
+            }
+        };
+
+        loadGoogleMapsScript();
+        return () => {
+            const googleMapsScript = document.querySelector('script[src="https://maps.googleapis.com/maps/api/js"]');
+            if (googleMapsScript) {
+                googleMapsScript.remove();
+            }
+        };
+    }, []);
 
     const handleChange = (range) => {
         const [startD, endD] = range;
@@ -30,12 +51,21 @@ function NewTaskModal({open, handleClose, db, user}){
       };
 
     const createTask = () => {
+
+        const geocoder = new window.google.maps.Geocoder();
+
+        geocoder.geocode({ 'address': location }, (results, status) => {
+            if (status === 'OK') {
+                const coordinates = results[0].geometry.location;
+                const latLng = { lat: coordinates.lat(), lng: coordinates.lng() };
+                setCoords(latLng);
         const reference = ref(db, 'users/' + user.uid + '/' + taskName);
         set(reference, {
             startDate: startD.toString(),
             endDate: endD.toString(),
             desc: description,
-            loc: location
+            loc: location,
+            coords: latLng
         }).catch((error) => {
             console.log(error);
         });
