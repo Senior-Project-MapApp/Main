@@ -1,6 +1,6 @@
 import React, {QRCode, useEffect, useState } from 'react';
 import { Grid, Box, Button, Typography, TextField } from "@mui/material";
-import MapGraph from "./mapGraph";
+import TableGraph from "./tableGraph";
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import MapIcon from '@mui/icons-material/Map';
 import PlaceIcon from '@mui/icons-material/Place';
@@ -10,7 +10,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import { Navigate } from "react-router-dom";
 import NewTaskModal from './createNewTask';
 
-function Map({data, sign, db, user}) {
+function Map({data, sign, db, user, task}) {
   const [map, setMap] = useState(null);
   const [searchBox, setSearchBox] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -214,7 +214,7 @@ function Map({data, sign, db, user}) {
             )}
           </Box>
           <Box sx={{width: "40%"}}>
-              <MapGraph data={data}/>
+              <TableGraph data={task}/>
           </Box>
         </Grid>
       </>

@@ -18,6 +18,9 @@ function TableGraph ({data}) {
                             <TableRow sx={{"& th": {color: "#1b5e20", backgroundColor: "#c5e1a5"}}}>
                                 <TableCell align="center"><Typography>Task Name</Typography></TableCell>
                                 <TableCell align="left"><Typography>Description</Typography></TableCell>
+                                <TableCell align="center"><Typography>Location</Typography></TableCell>
+                                <TableCell align="center"><Typography>Start Date</Typography></TableCell>
+                                <TableCell align="center"><Typography>End Date</Typography></TableCell>
                                 {/*<TableCell align="center"><Typography>Priority</Typography></TableCell>*/}
                             </TableRow>
                         </TableHead>
@@ -27,6 +30,9 @@ function TableGraph ({data}) {
                                 <TableRow key={dataObj[0]}>
                                     <TableCell align="center">{dataObj[0]}</TableCell> 
                                     <TableCell align="left">{dataObj[1].desc}</TableCell>
+                                    <TableCell align="center">{dataObj[1].loc}</TableCell>
+                                    <TableCell align="center">{dataObj[1].startDate.substring(0, 15)}</TableCell>
+                                    <TableCell align="center">{dataObj[1].endDate.substring(0, 15)}</TableCell>
                                     {/*<TableCell sx={dataObj.priority && !dataObj.status ? {background: "#ef9a9a"}:{}} align="center">{dataObj.priority  <  1 ? <HorizontalRuleIcon/> : <DensityMediumIcon/>  }</TableCell> */}
                                 </TableRow>
                             );
