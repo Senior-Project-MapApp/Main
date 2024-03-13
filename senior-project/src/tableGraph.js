@@ -5,7 +5,8 @@ import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 
 function TableGraph ({data}) {
 
-    var arr = data;
+    let arr = Object.entries(data);
+    console.log(arr);
 
     /*arr.sort((a, b) => b.priority - a.priority);
     arr.sort((a, b) => a.status - b.status);*/

@@ -16,7 +16,6 @@ function Home ({data, sign, db, user, task}) {
     const handleClose = () => {
         setNTask(false);
     }
-    console.log(task);
 
     if(sign){
         return(
