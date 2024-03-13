@@ -7,8 +7,8 @@ function TableGraph ({data}) {
 
     var arr = data;
 
-    arr.sort((a, b) => b.priority - a.priority);
-    arr.sort((a, b) => a.status - b.status);
+    /*arr.sort((a, b) => b.priority - a.priority);
+    arr.sort((a, b) => a.status - b.status);*/
 
     return(
         <TableContainer  sx={{marginTop: "2%", maxHeight: "50"}} component={Paper}>

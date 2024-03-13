@@ -5,7 +5,7 @@ import AddTaskIcon from '@mui/icons-material/AddTask';
 import { Navigate } from "react-router-dom";
 import NewTaskModal from "./createNewTask";
 
-function Home ({data, sign, db, user, task, getAllTasks}) {
+function Home ({data, sign, db, user, task}) {
 
     const [nTask, setNTask] = useState(false);
 
@@ -16,9 +16,7 @@ function Home ({data, sign, db, user, task, getAllTasks}) {
     const handleClose = () => {
         setNTask(false);
     }
-
-    getAllTasks(user, db);
-    console.log("here\n" + task);
+    console.log(task);
 
     if(sign){
         return(
