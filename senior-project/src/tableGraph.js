@@ -24,9 +24,9 @@ function TableGraph ({data}) {
                         <TableBody>
                         {arr.map((dataObj) => {
                             return (
-                                <TableRow key={dataObj.task} sx={dataObj.status ? {background: "#dcedc8"}:{}}>
-                                    <TableCell align="center">{dataObj}</TableCell> 
-                                    <TableCell align="left">{dataObj.desc}</TableCell>
+                                <TableRow key={dataObj[0]}>
+                                    <TableCell align="center">{dataObj[0]}</TableCell> 
+                                    <TableCell align="left">{dataObj[1].desc}</TableCell>
                                     {/*<TableCell sx={dataObj.priority && !dataObj.status ? {background: "#ef9a9a"}:{}} align="center">{dataObj.priority  <  1 ? <HorizontalRuleIcon/> : <DensityMediumIcon/>  }</TableCell> */}
                                 </TableRow>
                             );
