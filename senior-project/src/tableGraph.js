@@ -7,14 +7,6 @@ function TableGraph ({data, removeTask, user, db}) {
     let arr = Object.entries(data);
     console.log(arr);
 
-    /*arr.sort((a, b) => b.priority - a.priority);
-    arr.sort((a, b) => a.status - b.status);*/
-
-    function handleOnClick()
-    {
-
-    }
-
     return(
         <TableContainer  sx={{marginTop: "2%", maxHeight: "50"}} component={Paper}>
                     <Table stickyHeader aria-label="sticky table">
@@ -26,7 +18,6 @@ function TableGraph ({data, removeTask, user, db}) {
                                 <TableCell align="center"><Typography>Start Date</Typography></TableCell>
                                 <TableCell align="center"><Typography>End Date</Typography></TableCell>
                                 <TableCell align="center"><Typography></Typography></TableCell>
-                                {/*<TableCell align="center"><Typography>Priority</Typography></TableCell>*/}
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -39,7 +30,6 @@ function TableGraph ({data, removeTask, user, db}) {
                                     <TableCell align="center">{dataObj[1].startDate.substring(0, 15)}</TableCell>
                                     <TableCell align="center">{dataObj[1].endDate.substring(0, 15)}</TableCell>
                                     <TableCell align="center"><IconButton onClick={() => removeTask(user, db, dataObj[0])}><DeleteIcon/></IconButton></TableCell>
-                                    {/*<TableCell sx={dataObj.priority && !dataObj.status ? {background: "#ef9a9a"}:{}} align="center">{dataObj.priority  <  1 ? <HorizontalRuleIcon/> : <DensityMediumIcon/>  }</TableCell> */}
                                 </TableRow>
                             );
                         })}
