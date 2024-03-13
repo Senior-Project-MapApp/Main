@@ -15,6 +15,7 @@ import AddTaskIcon from '@mui/icons-material/AddTask';
 
 import App, { accessToken } from "./App.js";
 import NewTaskModal from './createNewTask';
+import {Navigate} from "react-router-dom";
 
 const locales = {
     "en-US": require("date-fns/locale/en-US")
