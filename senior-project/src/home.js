@@ -5,7 +5,7 @@ import AddTaskIcon from '@mui/icons-material/AddTask';
 import { Navigate } from "react-router-dom";
 import NewTaskModal from "./createNewTask";
 
-function Home ({data, sign, db, user, task}) {
+function Home ({data, sign, db, user, task, removeTask}) {
 
     const [nTask, setNTask] = useState(false);
 
@@ -21,7 +21,7 @@ function Home ({data, sign, db, user, task}) {
         return(
             <Grid container direction={"row"}>
                 <Box sx={{width: "85%", margin: "auto"}}>
-                    <TableGraph data={task}/>
+                    <TableGraph data={task} removeTask={removeTask} user={user} db={db}/>
                 </Box>
                 <Box sx={{width: "11%", marginTop: "2%",}}>
                         <Button variant="contained" endIcon={<AddTaskIcon/>} onClick={handleOpenModal}>New Task</Button>

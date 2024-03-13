@@ -1,9 +1,8 @@
 import React from "react";
-import { TableBody, TableCell, TableContainer, TableHead, TableRow, Table, Paper, Typography, } from "@mui/material";
-import DensityMediumIcon from '@mui/icons-material/DensityMedium';
-import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
+import { TableBody, TableCell, TableContainer, TableHead, TableRow, Table, Paper, Typography, IconButton} from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
 
-function TableGraph ({data}) {
+function TableGraph ({data, removeTask, user, db}) {
 
     let arr = Object.entries(data);
     console.log(arr);
@@ -21,6 +20,7 @@ function TableGraph ({data}) {
                                 <TableCell align="center"><Typography>Location</Typography></TableCell>
                                 <TableCell align="center"><Typography>Start Date</Typography></TableCell>
                                 <TableCell align="center"><Typography>End Date</Typography></TableCell>
+                                <TableCell align="center"><Typography></Typography></TableCell>
                                 {/*<TableCell align="center"><Typography>Priority</Typography></TableCell>*/}
                             </TableRow>
                         </TableHead>
@@ -33,6 +33,7 @@ function TableGraph ({data}) {
                                     <TableCell align="center">{dataObj[1].loc}</TableCell>
                                     <TableCell align="center">{dataObj[1].startDate.substring(0, 15)}</TableCell>
                                     <TableCell align="center">{dataObj[1].endDate.substring(0, 15)}</TableCell>
+                                    <TableCell align="center"><IconButton><DeleteIcon/></IconButton></TableCell>
                                     {/*<TableCell sx={dataObj.priority && !dataObj.status ? {background: "#ef9a9a"}:{}} align="center">{dataObj.priority  <  1 ? <HorizontalRuleIcon/> : <DensityMediumIcon/>  }</TableCell> */}
                                 </TableRow>
                             );
