@@ -104,6 +104,7 @@ function App() {
       onValue(reference, (snapshot) => {
         console.log(snapshot.val());
         return snapshot.val();
+        setTask(snapshot.val());
       }, {
         onlyOnce: true
       });
