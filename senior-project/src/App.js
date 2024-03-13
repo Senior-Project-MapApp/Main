@@ -10,7 +10,7 @@ import {
   signInWithPopup,
   signOut
 } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js"
-import {getDatabase, onValue, ref} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js"
+import {getDatabase, onValue, ref, remove} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js"
 import SignIn from "./signIn";
 import Home from "./home";
 import Map from "./map";
@@ -107,6 +107,13 @@ function App() {
       }, {
         onlyOnce: true
       });
+    }
+  }
+
+  const removeTask = (user, db, task) => {
+    if (user != null) {
+      const reference = ref(db, "users/" + user.uid + "/" + task);
+      remove(reference);
     }
   }
 
