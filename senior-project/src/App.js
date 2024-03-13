@@ -102,9 +102,9 @@ function App() {
     if (user != null) {
       const reference = ref(db, "users/" + user.uid);
       onValue(reference, (snapshot) => {
-        console.log(snapshot.val());
+        //console.log(snapshot.val());
         setTask(snapshot.val());
-        return snapshot.val();
+        console.log(task);
       }, {
         onlyOnce: true
       });

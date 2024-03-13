@@ -18,6 +18,7 @@ function Home ({data, sign, db, user, getTask, getAllTasks}) {
     }
 
     let tasks = getAllTasks(user, db);
+    console.log("here\n" + tasks);
 
     if(sign){
         return(
