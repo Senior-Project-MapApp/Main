@@ -333,4 +333,7 @@ function Calendar1 ({user, db, sign, data, getAllTasks, getTask}) {
             </>
         );
     }
+    else{
+        return <Navigate replace to="/"/>
+    }
 } export default Calendar1;
