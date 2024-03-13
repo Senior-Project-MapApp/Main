@@ -117,8 +117,6 @@ function App() {
     }
   }
 
-  removeTask(currUser, db, "hi");
-
   return (
     //This is where the sign in page will be
     //Once the user signs in, they will be sent to the home page
