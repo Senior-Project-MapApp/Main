@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 
 import format from "date-fns/format";
 import getDay from "date-fns/getDay";
@@ -9,12 +9,16 @@ import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { gapi } from "gapi-script";
-import { Grid, Box, Button } from "@mui/material";
+import { Grid, Box, Button, Dialog, DialogTitle,  Typography } from "@mui/material";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import TableGraph from "./tableGraph";
 import AddTaskIcon from '@mui/icons-material/AddTask';
+import { Navigate } from "react-router-dom";
 
 import App, { accessToken } from "./App.js";
 import NewTaskModal from './createNewTask';
+
 
 const locales = {
     "en-US": require("date-fns/locale/en-US")
@@ -28,27 +32,31 @@ const localizer = dateFnsLocalizer({
     locales
 })
 
-function Calendar1 ({user, db, sign, data, getAllTasks, getTask}) {
-    const calendarID = user.email; 
+function Calendar1 ({user, db, sign, task}) {
+    
+     
     const ImportedAccessToken = accessToken;
 
-    const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" , description: "", id: "", color: "#c6e1a5"});
+    const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" , description: "", id: "", color: "#c6e1a5", location: ""});
     const [allEvents, setAllEvents] = useState([]);
     const [selected, setSelected] = useState();
     const [nTask, setNTask] = useState(false);
     const [showList, setShowList] = useState(false);
     const [boxWidth, setBoxWidth] = useState(100);
-    const [tasks, setTasks] = useState(getAllTasks(user, db))
+    
+    let dbTasks = Object.entries(task);
 
     React.useEffect(() => { // shows or hides list on the right of screen
-        handleAddEventsFromDB(); //gets all calendar events from db
-        getEvents(); // gets all calendar events from Google
-        if (showList === false) { //adjustsbox width 
+        setAllEvents([]);
+        getEvents(); // gets all calendar events from Google and now the DB as well
+        if (showList === false) { //adjusts box width 
             setBoxWidth(100);
         } else {
             setBoxWidth(70);
         }
     }, [showList]);
+
+    
 
     const handleOpenModal = () => {
         setNTask(true);
@@ -56,11 +64,11 @@ function Calendar1 ({user, db, sign, data, getAllTasks, getTask}) {
   
     const handleClose = () => {
         setNTask(false);
-    }
+    };
   
     const handleSelectEvent = useCallback(
         (event) => {setSelected(event);
-                    window.alert("Title: " + event.title + "\nDescription: " + event.description + "\nID: " + event.id + "\nColor: " + event.color);
+                    window.alert("Title: " + event.title + "\nDescription: " + event.description + "\nID: " + event.id + "\nColor: " + event.color + "\nLocation: " + event.location);
         }, 
         []
     )
@@ -76,16 +84,16 @@ function Calendar1 ({user, db, sign, data, getAllTasks, getTask}) {
         };
     }
     
-    function handleAddEventsFromDB() {
-        for (const property in tasks) {
-            console.log(`${property}: ${tasks[property]}`);
+    function handleAddEventsFromDB(dbTasks) {
+        for (var i = 0; i < dbTasks.length; i++) {
+            const title = dbTasks[i][0];
+            const desc = dbTasks[i][1].desc;
+            const location = dbTasks[i][1].loc;
+            const start = new Date(dbTasks[i][1].startDate);
+            const end = new Date(dbTasks[i][1].endDate);
+            setAllEvents( (allEvents) => ( [...allEvents, {title: title, start: start, end: end, description: desc, color: "#c6e1a5", location: location}]));
+            //handleAddCalendarEvent(title, start, end, desc); // I am unsure how necessary it is to add to google calendar. Currently adds to calendar upon each re-render.
         }
-        /*tasks.forEach(task => {
-            const title = task.desc;
-            const start = task.endDate;
-            const end = task.startDate;
-            setAllEvents( (allEvents) => ( [...allEvents, {title: title, start: start, end: end, color: "#c6e1a5"}]));
-        });*/
     }
 
     function handleAddAllEvents(events){ //adds to local calendar from array returned from Google
@@ -142,8 +150,9 @@ function Calendar1 ({user, db, sign, data, getAllTasks, getTask}) {
         })
     }
     
-    function getEvents() { //gets array of events from calendar api
+    function getEvents() { //gets array of events from calendar api and db
         console.log("Getting array of events");
+        const calendarID = user.email;
         let eventsFromGoogle = [];
 
         function initiate() {
@@ -159,6 +168,7 @@ function Calendar1 ({user, db, sign, data, getAllTasks, getTask}) {
                 eventsFromGoogle = response.result.items;
                 console.log(eventsFromGoogle);
                 handleAddAllEvents(eventsFromGoogle); //add to local calendar
+                handleAddEventsFromDB(dbTasks); // adds to local calendar from db
                 return eventsFromGoogle;
             },
             function (err) {
@@ -169,16 +179,13 @@ function Calendar1 ({user, db, sign, data, getAllTasks, getTask}) {
         } gapi.load("client", initiate);
     }
 
-    function handleAddCalendarEvent() { //creates an event 
+    function handleAddCalendarEvent(title, start, end, desc) { //creates an event 
         
         console.log("Creating calendar event");
-        const title = newEvent.title;
-        const start = newEvent.start;
-        const end = newEvent.end;
-        
+        const calendarID = user.email;
         const event = {
             'summary': title,
-            'description': "Eventually add a way to customize this.",
+            'description': desc,
             'start': {
                 'dateTime': start.toISOString(),
                 'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -213,6 +220,7 @@ function Calendar1 ({user, db, sign, data, getAllTasks, getTask}) {
 
     function handleDeleteCalendarEvent() {  //deletes an event 
         setAllEvents(allEvents.filter(dontRemove => dontRemove !== selected));
+        const calendarID = user.email;
         function initiate(){
             gapi.client.request({ //deletes "selected" item
                 path: `https://www.googleapis.com/calendar/v3/calendars/${calendarID}/events/${selected.id}`,
@@ -251,7 +259,8 @@ function Calendar1 ({user, db, sign, data, getAllTasks, getTask}) {
         const start = newEvent.start;
         const end = newEvent.end;
         const desc = newEvent.description;
-        
+        const calendarID = user.email;
+
         const event = {
             'summary': title,
             'description': desc,
@@ -295,21 +304,20 @@ function Calendar1 ({user, db, sign, data, getAllTasks, getTask}) {
             <>
             <Grid container direction={"row"}>
                 <Box sx={{width: `${boxWidth}%`}}>
+                    
+                    
                     <div>
-                        <h1>
-                            <Button sx={{marginTop: "3%", marginLeft: "5%"}} variant="contained" endIcon={<AddTaskIcon/>} onClick={handleOpenModal}>New Task</Button>
-                            <NewTaskModal open={nTask} handleClose={handleClose} db={db} user={user}/>
-                            
-                            <Button 
-                                sx={{marginTop: "3%", marginLeft: "5%"}} 
-                                variant="contained" endIcon={<AddTaskIcon/>} 
-                                onClick={() => setShowList(!showList)}>
-                                {showList ? "Hide" : "Show"} list
-                            </Button>
-                            
-                        </h1>
-                    </div>
-                    <div>
+                        
+                        <Button sx={{marginTop: "3%", marginLeft: "83%"}} variant="contained" endIcon={<AddTaskIcon/>} onClick={handleOpenModal}>New Task</Button>
+                        <NewTaskModal open={nTask} handleClose={handleClose} db={db} user={user}/>
+
+                        <Button 
+                            sx={{marginTop: "3%", marginLeft: "83%"}} 
+                            variant="contained" endIcon={showList ? <VisibilityOffIcon/> : <VisibilityIcon/>} 
+                            onClick={() => setShowList(!showList)}>
+                            {showList ? "Hide" : "Show"} list
+                        </Button>
+                        
                         <Calendar 
                             localizer={localizer}
                             events={allEvents}
@@ -323,14 +331,17 @@ function Calendar1 ({user, db, sign, data, getAllTasks, getTask}) {
                             style={{ height: 500, margin: "50px" }} 
                         />
                     </div>
+                    
                 </Box>
                 <Box sx={{width: `${100-boxWidth}%`}}>
                     <div className="Calendar">
-                        {showList ? <TableGraph data={data}/>  : null} 
+                        {showList ? <TableGraph data={task}/>  : null} 
                     </div>
                 </Box>
             </Grid>
             </>
         );
+    } else {
+        return <Navigate replace to="/"/>
     }
 } export default Calendar1;
