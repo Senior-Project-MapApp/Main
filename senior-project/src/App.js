@@ -126,7 +126,7 @@ function App() {
         <Route path="/SignIn" element={<SignIn/>}/>
         <Route path="/home" element={<Home data={data} sign={sign} db={db} user={currUser} task={task} removeTask={removeTask}/>}/>
         <Route path="/mapview" element={<Map data={data} sign={sign} db={db} user={currUser} task={task}/>}/>
-        <Route path="calendarview" element={<Calendar data={data} sign={sign} db={db} user={currUser} getTask={getTask} getAllTasks={getAllTasks}/>}/> 
+        <Route path="calendarview" element={<Calendar data={data} sign={sign} db={db} user={currUser} task={task}/>}/> 
         <Route path="profile" element={<Profile user={currUser} data={data} sign={sign}/>}/>
       </Routes>
 
