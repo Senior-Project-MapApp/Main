@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
+import {QRCodeSVG} from 'qrcode.react';
 
 import { Grid, Box, Button, TextField, Typography } from "@mui/material";
 import MapGraph from "./mapGraph";
