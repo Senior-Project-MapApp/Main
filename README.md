@@ -16,6 +16,14 @@ To start the react app, run:
 
      npm install @mui/material react-router-dom @emotion/react @emotion/styled @react-google-maps/api react react-dom react-datepicker date-fns react-big-calendar gapi-script @floating-ui/core
 
+To install frontend MUI components
+
+     npm install @mui/material @emotion/react @emotion/styled
+
+To instal MUI icons
+
+     npm install @mui/icons-material
+
 Then:
 
      npm start
