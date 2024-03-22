@@ -1,6 +1,11 @@
-import React, {QRCode, useEffect, useState } from 'react';
-import { Grid, Box, Button, Typography, TextField } from "@mui/material";
-import TableGraph from "./tableGraph";
+import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
+import {QRCodeSVG} from 'qrcode.react';
+
+import { Grid, Box, Button, TextField, Typography } from "@mui/material";
+import MapGraph from "./mapGraph";
+
+
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import MapIcon from '@mui/icons-material/Map';
 import PlaceIcon from '@mui/icons-material/Place';
