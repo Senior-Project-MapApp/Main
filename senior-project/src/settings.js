@@ -1,11 +1,11 @@
 import React from "react";
 import { Box, Typography, Switch, List, ListItem, ListItemText} from "@mui/material";
 
-function Settings({data}){
+function Settings({data, user}){
     return(
         <>
         <Box container="true" direction={"column"} sx={{width: "70%", marginLeft: "5%"}}> 
-            <Typography variant="h3">{data.userName}</Typography>
+            <Typography variant="h3">{user.displayName}</Typography>
             <Typography variant="caption">Joined: {data.joined}</Typography>
             <List sx={{marginTop: "5%", width: "50%"}}> 
                 <ListItem>
