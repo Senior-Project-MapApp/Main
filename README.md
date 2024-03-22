@@ -29,3 +29,6 @@ Then:
      npm start
 
   to start the react app.
+
+
+To sign in into the web app we used our personal Google accounts and allowed the app to access everyting on the google account.
