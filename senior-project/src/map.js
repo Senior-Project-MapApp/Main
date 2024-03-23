@@ -162,6 +162,16 @@ function Map({data, sign, db, user, task}) {
     setSearchInput(e.target.value);
   };
 
+  const [nTask, setNTask] = useState(false);
+
+  const handleOpenModal = () => {
+      setNTask(true);
+  };
+
+  const handleClose = () => {
+      setNTask(false);
+  }
+
   if(sign){
     return (
       <>
@@ -177,7 +187,8 @@ function Map({data, sign, db, user, task}) {
                   onChange={handleSearchInputChange}
                 />
                 <Button variant="contained" onClick={handleGetDirections}>Get Directions</Button> 
-                <Button sx={{marginLeft: "37%"}} variant="contained" endIcon={<AddTaskIcon/>}>New Task</Button>
+                <Button sx={{marginLeft: "37%"}} variant="contained" endIcon={<AddTaskIcon/>} onClick={handleOpenModal}>New Task</Button>
+                <NewTaskModal open={nTask} handleClose={handleClose} db={db} user={user}/>
               </Grid>
               <Grid sx={{margin: "2%"}} container direction={"row"} columnGap={3}>
                 <Button variant="contained" onClick={handleUseMyLocation}>Use My Location</Button>
