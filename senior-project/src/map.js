@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {QRCodeSVG} from 'qrcode.react';
 
 import { Grid, Box, Button, TextField, Typography } from "@mui/material";
-import MapGraph from "./mapGraph";
+import TableGraph from "./tableGraph";
 
 
 import AddTaskIcon from '@mui/icons-material/AddTask';
@@ -212,7 +212,7 @@ function Map({data, sign, db, user, task}) {
                       <LinkIcon/>
                       <Typography>Google Maps Link: <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></Typography>
                     </Grid>
-                    <QRCode value={googleMapsUrl} size={128} level={"H"} />
+                    <QRCodeSVG value={googleMapsUrl} size={128} level={"H"} />
                   </div>
                 )}
               </Grid>
